@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectable_item_background">
+
+    <ImageView
+        android:id="@+id/cover_image_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="@dimen/dimen_default"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:src="@drawable/background"/>
+
+    <TextView
+        android:id="@+id/num_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:layout_marginEnd="@dimen/dimen_default"
+        android:layout_alignBaseline="@id/title_text_view"
+        android:layout_alignParentRight="true"
+        android:text="200"
+        android:textSize="12sp"
+        android:layout_marginStart="@dimen/dimen_default"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_toLeftOf="@id/num_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_alignTop="@+id/cover_image_view"
+        android:layout_toEndOf="@+id/cover_image_view"
+        android:layout_toRightOf="@+id/cover_image_view"
+        android:text="asdasdasd"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_toStartOf="@id/num_text_view"/>
+
+    <TextView
+        android:id="@+id/desc_text_view"
+        android:layout_width="match_parent"
+        android:maxLines="3"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_text_view"
+        android:layout_toEndOf="@+id/cover_image_view"
+        android:layout_toRightOf="@+id/cover_image_view"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:text="shkjdhfskjdasdbakjshdbajhsbdjahsbdjahsbdjahsbdjahsbdjahsbdasdjahsbdjashbdajhsbd"
+        android:textColor="@android:color/white"
+        />
+
+    <TextView
+        android:id="@+id/size_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/cover_image_view"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/text_view_bcg"
+        android:gravity="end"
+        android:padding="3dp"
+        android:text="dsdgsdgsdg"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/cover_image_view"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        style="?attr/dividerHorizontal"
+        android:background="@color/colorDarkGray"/>
+
+</RelativeLayout>

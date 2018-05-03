@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectable_item_background">
+
+    <ImageView
+        android:id="@+id/thumb_image_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="@dimen/dimen_default"
+        android:scaleType="centerCrop"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/num_text_view"
+        android:src="@drawable/vk_logo"
+        android:layout_toEndOf="@id/num_text_view"/>
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:layout_marginEnd="@dimen/dimen_default"
+        android:layout_alignTop="@+id/thumb_image_view"
+        android:layout_toEndOf="@+id/thumb_image_view"
+        android:layout_toRightOf="@+id/thumb_image_view"
+        android:text="asdasdasd"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/desc_text_view"
+        android:layout_width="match_parent"
+        android:maxLines="4"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_text_view"
+        android:layout_toEndOf="@+id/thumb_image_view"
+        android:layout_toRightOf="@+id/thumb_image_view"
+        android:layout_marginRight="@dimen/dimen_default"
+        android:layout_marginEnd="@dimen/dimen_default"
+        android:text="dasdasdasdasdasd"
+        android:textColor="@android:color/white"
+        />
+
+    <TextView
+        android:id="@+id/addition_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/thumb_image_view"
+        android:layout_alignEnd="@+id/desc_text_view"
+        android:layout_alignRight="@+id/desc_text_view"
+        android:background="@drawable/text_view_bcg"
+        android:gravity="right"
+        android:padding="3dp"
+        android:text="dsdgsdgsdg"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/size_text_view"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        style="?attr/dividerHorizontal"
+        android:background="@color/colorDarkGray"/>
+
+</RelativeLayout>

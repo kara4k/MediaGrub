@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_default"
+                android:paddingRight="@dimen/dimen_default"
+                android:paddingTop="@dimen/dimen_default"
+                >
+
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="Will Smith"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/service_text_view"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/summary_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="4"
+        android:layout_toLeftOf="@id/progress_text_view"
+        android:layout_below="@id/title_text_view"
+        android:text="Awesome album"/>
+
+    <TextView
+        android:id="@+id/progress_text_view"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_alignBaseline="@id/summary_text_view"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="234/1000"
+        android:textSize="12dp"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/summary_text_view"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:max="100"
+        android:maxHeight="10dp"
+        android:minHeight="10dp"
+        android:progress="35"
+        android:progressDrawable="@drawable/progressbar_progress_drawable"/>
+
+    <LinearLayout
+        android:id="@+id/actions_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progress_bar"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/play_pause_img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bcg"
+            android:tint="@android:color/white"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/ic_play_arrow_black_24dp"/>
+
+        <ImageButton
+            android:id="@+id/stop_img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_default"
+            android:layout_marginLeft="@dimen/dimen_default"
+            android:background="@drawable/button_bcg"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:tint="@android:color/white"
+            android:src="@drawable/ic_stop_black_24dp"/>
+
+        <ImageButton
+            android:id="@+id/delete_img_btn"
+            android:background="@drawable/button_bcg"
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:tint="@android:color/white"
+            android:layout_weight="1"
+            android:src="@drawable/ic_delete_black_24dp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        style="?attr/dividerHorizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:layout_height="1dp"
+        android:layout_below="@id/actions_layout"
+        android:background="@color/colorAccent"/>
+</RelativeLayout>

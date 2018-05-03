@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/service_item_auth"
+        android:icon="@drawable/ic_account_circle_white_24dp"
+        android:title="@string/service_item_authorization"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/service_item_friends"
+        android:icon="@drawable/ic_people_white_24dp"
+        app:showAsAction="always"
+        android:title="@string/service_item_contacts"/>
+    <item
+        android:id="@+id/service_item_custom_friends"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_group_add_white_24dp"
+        android:title="@string/service_item_custom"/>
+    <item
+        android:id="@+id/service_item_search"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/service_item_search"/>
+    <item
+        android:id="@+id/service_item_own"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_photo_white_24dp"
+        android:title="@string/service_item_own"/>
+</menu>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:id="@+id/user_layout"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectable_item_background">
+
+    <ImageView
+        android:id="@+id/photo_image_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dimen_default"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/num_text_view"
+        android:src="@drawable/vk_logo"/>
+
+    <TextView
+        android:id="@+id/num_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/main_text_view"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:text="200"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/main_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/photo_image_view"
+        android:layout_marginTop="14dp"
+        android:layout_toEndOf="@+id/photo_image_view"
+        android:layout_toRightOf="@+id/photo_image_view"
+        android:text="shkjdhfskjd"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/addition_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/main_text_view"
+        android:layout_marginBottom="@dimen/dimen_default"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/text_view_bcg"
+        android:gravity="right"
+        android:padding="3dp"
+        android:text="dsdgsdgsdg"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/addition_text_view"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginRight="@dimen/dimen_default"
+        style="?attr/dividerHorizontal"
+        android:background="@color/colorDarkGray"/>
+
+</RelativeLayout>

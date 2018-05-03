@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectable_item_background"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_default"
+                android:paddingRight="@dimen/dimen_default"
+                android:paddingTop="@dimen/dimen_default"
+    >
+
+    <ImageView
+        android:id="@+id/preview_image_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        />
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_toLeftOf="@id/service_text_view"
+        android:layout_toRightOf="@id/preview_image_view"
+        android:maxLines="2"
+        android:text="Will Smith"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/service_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:text="VKontakte"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/summary_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_text_view"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_toLeftOf="@id/total_text_view"
+        android:layout_toRightOf="@id/preview_image_view"
+        android:maxLines="4"
+        android:text="Awesome album"/>
+
+    <TextView
+        android:id="@+id/total_text_view"
+        android:drawablePadding="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/summary_text_view"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:text="200"
+        android:textSize="12dp"/>
+
+    <View
+        android:id="@+id/divider"
+        style="?attr/dividerHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/summary_text_view"
+        android:layout_marginTop="@dimen/dimen_default"
+        android:background="@color/colorDarkGray"/>
+</RelativeLayout>

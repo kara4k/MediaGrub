@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selectable_item_background"
+    >
+
+    <ImageView
+        android:id="@+id/thumb_image_view"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"/>
+
+    <TextView
+        android:id="@+id/title_text_view"
+        style="@style/Invisible"/>
+
+    <TextView
+        android:id="@+id/desc_text_view"
+        style="@style/Invisible"
+        />
+
+    <TextView
+        android:id="@+id/addition_text_view"
+        style="@style/Invisible"/>
+
+</RelativeLayout>
