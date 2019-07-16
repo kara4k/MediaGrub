@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface TwitterApi {
 
-    String BEARER = "";
+    String BEARER = "AAAAAAAAAAAAAAAAAAAAAPPe4wAAAAAAtzPCt3CZ0En2bUaGdCBtFkUTUKk%3DLx6yNW5acGJlZBgBzGdTxvTqln8nYgfnOWJbvscMZ0m808T43A";
 
     @Headers({
             "Host: api.twitter.com",

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "716716641526",
+    "firebase_url": "https://vmemo-4591f.firebaseio.com",
+    "project_id": "vmemo-4591f",
+    "storage_bucket": "vmemo-4591f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716716641526:android:80b4374ce2d49deb",
+        "android_client_info": {
+          "package_name": "com.kara4k.mediagrub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716716641526-j3k1v9lmrtrjl31c1r740j7leapebuaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kara4k.mediagrub",
+            "certificate_hash": "7e9f336ddfbfd618fca6e2e60ec53f3af38deb0e"
+          }
+        },
+        {
+          "client_id": "716716641526-c5q4gljakp03upp5qgbna9labe7jucm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrWk44kAjLHcAoyB-ZhKuThsiFL90gbg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716716641526-c5q4gljakp03upp5qgbna9labe7jucm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

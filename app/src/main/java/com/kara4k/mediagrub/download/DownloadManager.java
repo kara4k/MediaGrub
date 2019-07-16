@@ -312,23 +312,18 @@ public class DownloadManager {
 
     private void downloadItem(MediaItem mediaItem, String savePath) throws IOException {
         URL url = new URL(mediaItem.getSourceUrl());
-        InputStream input = new BufferedInputStream(url.openStream());
 
-        try {
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(savePath));
+        try (InputStream input = new BufferedInputStream(url.openStream())) {
 
-            try {
+            try (OutputStream output = new BufferedOutputStream(new FileOutputStream(savePath))) {
                 byte[] buffer = new byte[1024];
                 int bytesRead = 0;
+
                 while ((bytesRead = input.read(buffer, 0, buffer.length)) >= 0) {
                     output.write(buffer, 0, bytesRead);
                 }
 
-            } finally {
-                output.close();
             }
-        } finally {
-            input.close();
         }
     }
 
@@ -337,9 +332,8 @@ public class DownloadManager {
 
         if (mediaItem.getType() == MediaItem.VIDEO) extension = ".mp4";
 
-        String format = String.format(Locale.ENGLISH,
+        return String.format(Locale.ENGLISH,
                 "%s/%s%s", subPath, mediaItem.getId(), extension);
-        return format;
     }
 
     private boolean isFileExist(String savePath) {

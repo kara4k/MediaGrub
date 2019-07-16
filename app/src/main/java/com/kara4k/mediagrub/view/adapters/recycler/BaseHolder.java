@@ -8,7 +8,8 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseHolder<T extends SelectableItem> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+public abstract class BaseHolder<T extends SelectableItem> extends RecyclerView.ViewHolder
+        implements View.OnClickListener, View.OnLongClickListener {
 
     protected Context mContext;
     protected T mItem;

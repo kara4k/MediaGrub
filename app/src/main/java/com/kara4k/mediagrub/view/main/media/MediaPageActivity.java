@@ -1,6 +1,7 @@
 package com.kara4k.mediagrub.view.main.media;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -58,6 +59,7 @@ public class MediaPageActivity extends BaseActivity {
                 .subscribe(mediaItems -> onComplete(mediaItems, position), this::onError);
     }
 
+    @SuppressLint("RestrictedApi")
     private void setupToolbar(){
         try {
             getSupportActionBar().setShowHideAnimationEnabled(true);

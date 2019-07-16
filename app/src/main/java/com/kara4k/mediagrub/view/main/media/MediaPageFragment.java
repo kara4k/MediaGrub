@@ -1,6 +1,7 @@
 package com.kara4k.mediagrub.view.main.media;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,6 +69,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
                 .build().injectMediaPageFragment(this);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onViewReady() {
         MediaItem mediaItem = (MediaItem) getArguments().getSerializable(MEDIA_ITEM);

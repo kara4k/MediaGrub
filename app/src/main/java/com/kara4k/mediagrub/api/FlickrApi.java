@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface FlickrApi {
 
-    String SERVICE_KEY = "";
+    String SERVICE_KEY = "70f259d5b486d4def1af2de9733360b6";
     String DEFAULT_VALUES = "?format=json&nojsoncallback=1&api_key=" + SERVICE_KEY;
 
     @GET(DEFAULT_VALUES + "&method=flickr.urls.lookupUser")

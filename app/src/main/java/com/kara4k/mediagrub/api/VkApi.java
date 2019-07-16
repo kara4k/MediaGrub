@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 
 public interface VkApi {
 
-    String SERVICE_KEY = "";
+    String SERVICE_KEY = "76a6d2c876a6d2c876a6d2c8cd76c672cf776a676a6d2c82cfd74df80f524f4d0422320";
 
     @GET("friends.get?v=5.52&fields=first_name,photo_100")
     Observable<FriendsResponse> getFriends(

@@ -85,7 +85,7 @@ public class MainActivity extends DrawerActivity implements MainViewIF {
         mServiceNavigation = serviceNavigation;
         setFragment(mServiceNavigation.getMainFragment());
         mBottomToolbar.setVisibility(serviceNavigation.getToolbarVisibility());
-        mAdManager.checkShowAd();
+//        mAdManager.checkShowAd(); todo add maybe?
     }
 
     @Override
@@ -152,7 +152,7 @@ public class MainActivity extends DrawerActivity implements MainViewIF {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mAdManager.checkShowAd();
+//        mAdManager.checkShowAd();
 
         switch (item.getItemId()) {
             case R.id.service_item_auth:
@@ -206,7 +206,7 @@ public class MainActivity extends DrawerActivity implements MainViewIF {
     public void showExitConfirm() {
         String message = getString(R.string.dialog_exit_message);
         DialogInterface.OnClickListener onOkListener = (dialogInterface, i)
-                -> letTheGreatSuperBackPressMethodDoItsWorkLol();
+                -> super.onBackPressed();
 
         showConfirmDialog(null, message, onOkListener);
     }
