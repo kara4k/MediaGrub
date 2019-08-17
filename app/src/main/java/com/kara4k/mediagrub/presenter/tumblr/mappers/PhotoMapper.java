@@ -35,6 +35,7 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
                 .map(PhotoResponse::getResponse)
                 .map(Response::getPosts)
                 .flatMapIterable(posts -> posts)
+                .filter(post -> post.getPhotos() != null)
                 .map(Post::getPhotos)
                 .flatMapIterable(photos -> photos)
                 .map(this::map)

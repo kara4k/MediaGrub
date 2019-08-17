@@ -11,6 +11,8 @@ import com.kara4k.mediagrub.presenter.inst.mappers.SearchMapper;
 import com.kara4k.mediagrub.view.adapters.recycler.AlbumItem;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,7 +38,7 @@ public class InstPhotoSearchPresenter extends SearchPresenter {
 
     @Override
     public void onQuerySubmit(String query) {
-        String text = query.toLowerCase();
+        String text = query.replaceAll(" ", StringUtils.EMPTY).toLowerCase();
         super.onQuerySubmit(text);
 
         SearchRequestObj searchRequestObj = new SearchRequestObj(text, null);
@@ -48,7 +50,6 @@ public class InstPhotoSearchPresenter extends SearchPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
-
     }
 
     @Override
