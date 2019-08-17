@@ -39,37 +39,6 @@ public class TumblrPhotoListPresenter extends MediaListPresenter<MediaListViewIF
         createAlbum(userItem);
         setupTitle();
 
-        Observable<PhotoResponse> photos = mTumblrApi.getPhotos(userItem.getId());
-        photos.map(new Function<PhotoResponse, PhotoResponse>() {
-            @Override
-            public PhotoResponse apply(PhotoResponse photoResponse) throws Exception {
-                System.out.println(photoResponse);
-                return photoResponse;
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<PhotoResponse>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(PhotoResponse photoResponse) {
-                System.out.println(photoResponse);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
         mTumblrApi.getPhotos(userItem.getId())
                 .flatMap(mPhotoMapper)
                 .toList()
