@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 import android.util.LongSparseArray;
 
 import com.kara4k.mediagrub.R;
@@ -208,6 +209,7 @@ public class DownloadManager {
                         try {
                             downloadItem(task, mediaItem);
                         } catch (Exception e) {
+                            e.printStackTrace();
                             return;
                         }
 

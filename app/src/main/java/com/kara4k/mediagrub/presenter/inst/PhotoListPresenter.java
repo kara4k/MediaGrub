@@ -83,6 +83,7 @@ public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
 
         mInstApi.getPhotos(request)
                 .flatMap(mPhotoMapper)
+                .map(this::mapVideos)
                 .toList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
