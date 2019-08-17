@@ -5,5 +5,10 @@
             android:key="version"
             android:title="@string/settings_version_title"/>
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/privacy_policy">
+        <Preference
+            android:key="policy"
+            android:title="@string/open_outside_app"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

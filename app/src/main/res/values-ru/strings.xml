@@ -75,4 +75,6 @@
     <string name="settings_version_title">Версия</string>
     <string name="settings_category_about">Инфо</string>
     <string name="action_settings">Settings</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="open_outside_app">Открыть во внешнем приложении</string>
 </resources>

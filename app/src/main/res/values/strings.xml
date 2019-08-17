@@ -84,4 +84,7 @@
     <string name="preference_category_about">About</string>
     <string name="settings_version_title">Version</string>
     <string name="settings_category_about">About</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="open_outside_app">Open outside the app</string>
+    <string name="privacy_policy_link" translatable="false">https://docs.google.com/document/d/1kVOp4JmvVopLHekZJH8_mp8BQEr2UuOdxLUuYXpvXwc/edit?usp=sharing</string>
 </resources>
