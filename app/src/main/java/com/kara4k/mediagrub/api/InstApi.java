@@ -1,11 +1,14 @@
 package com.kara4k.mediagrub.api;
 
 
+import com.kara4k.mediagrub.model.inst.detailed.DetailedInfo;
 import com.kara4k.mediagrub.model.inst.photo.PhotoResponse;
 import com.kara4k.mediagrub.model.inst.search.SearchResponse;
 import com.kara4k.mediagrub.model.inst.users.UsersResponse;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
@@ -27,4 +30,7 @@ public interface InstApi {
     })
     @GET("graphql/query/?query_hash=3e7706b09c6184d5eafd8b032dbcf487")
     Observable<SearchResponse> searchPhotos(@Query("variables") String request);
+
+    @GET("graphql/query/?query_hash=477b65a610463740ccdb83135b2014db")
+    Call<DetailedInfo> getDetailedIno(@Query("variables") String variables);
 }

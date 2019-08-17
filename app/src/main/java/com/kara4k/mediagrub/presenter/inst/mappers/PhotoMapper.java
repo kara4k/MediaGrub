@@ -61,9 +61,13 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
         mediaItem.setDescription("");
         mediaItem.setAddition(getAddition(node));
         mediaItem.setThumbUrl(node.getThumbnailSrc());
-        mediaItem.setSourceUrl(node.getDisplayUrl());
         mediaItem.setType(getType(node));
+        mediaItem.setSourceUrl(getSourceUrl(node));
         return mediaItem;
+    }
+
+    private String getSourceUrl(Node node) {
+        return node.getIsVideo() ? node.getShortcode() : node.getDisplayUrl();
     }
 
     private String getTitle(Node node) {
@@ -76,7 +80,7 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
     }
 
     private int getType(Node node) {
-        return MediaItem.PHOTO;
+        return node.getIsVideo() ? MediaItem.VIDEO : MediaItem.PHOTO;
     }
 
     private String getAddition(Node node) {
