@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.LongSparseArray;
 
 import com.kara4k.mediagrub.R;
+import com.kara4k.mediagrub.di.modules.AppModule;
 import com.kara4k.mediagrub.model.database.DaoSession;
 import com.kara4k.mediagrub.model.database.MediaItem;
 import com.kara4k.mediagrub.model.database.MediaItemDao;
@@ -38,7 +39,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DownloadManager {
 
-    private static final String CHANNEL_ID = "notify_channel";
     private static final int NOTIFICATION_UPDATE = 1000;
 
     private Context mContext;
@@ -262,7 +262,7 @@ public class DownloadManager {
     }
 
     private NotificationCompat.Builder createBuilder(Task task) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, AppModule.NOTIFICATION_CHANNEL_ID);
         String textProgress = String.format(Locale.ENGLISH, "%d/%d",
                 task.getCount(), task.getTotal());
 

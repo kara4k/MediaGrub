@@ -1,8 +1,11 @@
 package com.kara4k.mediagrub.di.modules;
 
 import android.app.DownloadManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.v4.app.NotificationManagerCompat;
 
 import com.kara4k.mediagrub.model.database.DaoMaster;
@@ -19,6 +22,8 @@ import static android.content.Context.DOWNLOAD_SERVICE;
 
 @Module
 public class AppModule {
+
+    public static final String NOTIFICATION_CHANNEL_ID = "mediagrubNotificationChannelId";
 
     Context mContext;
 
@@ -47,6 +52,15 @@ public class AppModule {
     @Provides
     @Singleton
     NotificationManagerCompat provideNotifManager(Context context){
+        if (Build.VERSION.SDK_INT >= 26){
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                    "notification_channel",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
         return NotificationManagerCompat.from(context);
     }
 
