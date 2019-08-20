@@ -3,6 +3,7 @@ package com.kara4k.mediagrub.presenter.base;
 
 import android.support.annotation.NonNull;
 
+import com.kara4k.mediagrub.cache.CustomOneUsersCache;
 import com.kara4k.mediagrub.model.database.CustomUser;
 import com.kara4k.mediagrub.model.database.DaoSession;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
@@ -20,10 +21,14 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
 
     private int mUsersCount;
-    private List<UserItem> mUserItems = new ArrayList<>();
+    private final List<UserItem> mUserItems = new ArrayList<>();
+    private Observer<UserItem> singleUserObserver;
 
-    public CustomOneUserOnlyPresenter(DaoSession daoSession) {
+    private CustomOneUsersCache customOneUsersCache = CustomOneUsersCache.getInstance();
+
+    public CustomOneUserOnlyPresenter(final DaoSession daoSession) {
         super(daoSession);
+        createSingleUserObserver();
     }
 
     abstract public void requestSingleUserInfo(CustomUser customUser) throws Exception;
@@ -38,10 +43,21 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
                 .flatMapIterable(customUsers -> customUsers)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::requestSingleUserInfo, this::onError, this::onZeroUsersCount);
+                .subscribe(this::getSingleUserInfo, this::onError, this::onZeroUsersCount);
     }
 
-    private boolean setupTotalCount(List<CustomUser> customUsers) {
+    private void getSingleUserInfo(final CustomUser customUser) throws Exception {
+        final UserItem userItem = customOneUsersCache.getOrNull(customUser);
+
+        if (userItem != null) {
+            singleUserObserver.onNext(userItem);
+            if (mUsersCount == 0) singleUserObserver.onComplete();
+        } else {
+            requestSingleUserInfo(customUser);
+        }
+    }
+
+    private boolean setupTotalCount(final List<CustomUser> customUsers) {
         mUsersCount = customUsers.size();
         return true;
     }
@@ -53,22 +69,22 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
         }
     }
 
-    @NonNull
-    protected Observer<UserItem> getSingleUserObserver() {
-        return new Observer<UserItem>() {
+    private void createSingleUserObserver() {
+        singleUserObserver = new Observer<UserItem>() {
             @Override
-            public void onSubscribe(Disposable d) {
+            public void onSubscribe(final Disposable d) {
                 mCompositeDisposable.add(d);
             }
 
             @Override
-            public void onNext(UserItem userItem) {
+            public void onNext(final UserItem userItem) {
+                customOneUsersCache.putIfNotAlreadyExists(userItem);
                 mUserItems.add(userItem);
                 --mUsersCount;
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onError(final Throwable e) {
                 --mUsersCount;
             }
 
@@ -79,10 +95,16 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
         };
     }
 
+    @NonNull
+    protected Observer<UserItem> getSingleUserObserver() {
+        return singleUserObserver;
+    }
+
     private void onUsersListReady() {
         Completable.fromAction(() -> onSuccess(mUserItems))
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {}, this::onError);
+                .subscribe(() -> {
+                }, this::onError);
     }
 
 }

@@ -128,9 +128,9 @@ class ParseUtils {
      * <p/>
      * 1. All fields should had a public access.
      * 2. The name of the filed should be fully equal to name of JSONObject key.
-     * 3. Supports parse of all Java primitives, all {@link java.lang.String},
-     * arrays of primitive types, {@link java.lang.String}s and {@link com.vk.sdk.api.model.VKApiModel}s,
-     * list implementation line {@link com.vk.sdk.api.model.VKList}, {@link com.vk.sdk.api.model.VKAttachments.VKAttachment} or {@link com.vk.sdk.api.model.VKPhotoSizes},
+     * 3. Supports parse of all Java primitives, all {},
+     * arrays of primitive types, {}s and {@link com.vk.sdk.api.model.VKApiModel}s,
+     * list implementation line {@link com.vk.sdk.api.model.VKList}, {} or {@link com.vk.sdk.api.model.VKPhotoSizes},
      * {@link com.vk.sdk.api.model.VKApiModel}s.
      * <p/>
      * 4. Boolean fields defines by vk_int == 1 expression.

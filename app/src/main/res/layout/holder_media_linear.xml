@@ -11,9 +11,8 @@
         android:layout_margin="@dimen/dimen_default"
         android:scaleType="centerCrop"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/num_text_view"
         android:src="@drawable/vk_logo"
-        android:layout_toEndOf="@id/num_text_view"/>
+        />
 
     <TextView
         android:id="@+id/title_text_view"
@@ -59,7 +58,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/size_text_view"
         android:layout_marginLeft="@dimen/dimen_default"
         android:layout_marginRight="@dimen/dimen_default"
         style="?attr/dividerHorizontal"

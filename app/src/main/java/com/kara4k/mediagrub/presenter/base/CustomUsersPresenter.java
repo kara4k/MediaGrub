@@ -8,6 +8,7 @@ import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 
 import org.greenrobot.greendao.query.DeleteQuery;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -16,14 +17,14 @@ import io.reactivex.schedulers.Schedulers;
 
 abstract public class CustomUsersPresenter extends UsersListPresenter {
 
-    private DaoSession mDaoSession;
-    private CustomUserDao mCustomUserDao;
+    private final DaoSession mDaoSession;
+    private final CustomUserDao mCustomUserDao;
 
     protected abstract int getService();
 
     protected abstract int getUserType();
 
-    public CustomUsersPresenter(DaoSession daoSession) {
+    public CustomUsersPresenter(final DaoSession daoSession) {
         mCustomUserDao = daoSession.getCustomUserDao();
         mDaoSession = daoSession;
     }
@@ -38,14 +39,17 @@ abstract public class CustomUsersPresenter extends UsersListPresenter {
     }
 
     @Override
-    public void onItemClicked(int position, UserItem userItem) {
+    public void onItemClicked(final int position, final UserItem userItem) {
         getView().showAlbums(userItem);
     }
 
     @Override
-    public void onSuccess(List<UserItem> list) {
+    public void onSuccess(final List<UserItem> list) {
         if (list.isEmpty()) getView().showHint();
         else getView().hideHint();
+
+        Collections.sort(list, (u1, u2) -> u1.getMainText().compareTo(u2.getMainText()));
+
         super.onSuccess(list);
     }
 
@@ -58,10 +62,10 @@ abstract public class CustomUsersPresenter extends UsersListPresenter {
     }
 
     private void deleteSelectedUsers() {
-        List<UserItem> selectedItems = mSelector.getSelectedItems();
+        final List<UserItem> selectedItems = mSelector.getSelectedItems();
         for (int i = 0; i < selectedItems.size(); i++) {
-            String key = getKey(selectedItems.get(i));
-            DeleteQuery<CustomUser> tableDeleteQuery = mDaoSession.queryBuilder(CustomUser.class)
+            final String key = getKey(selectedItems.get(i));
+            final DeleteQuery<CustomUser> tableDeleteQuery = mDaoSession.queryBuilder(CustomUser.class)
                     .where(CustomUserDao.Properties.Key.eq(key),
                             CustomUserDao.Properties.Service.eq(getService()),
                             CustomUserDao.Properties.Type.eq(getUserType()))
@@ -72,7 +76,7 @@ abstract public class CustomUsersPresenter extends UsersListPresenter {
         mCustomUserDao.detachAll();
     }
 
-    protected String getKey(UserItem userItem) {
+    protected String getKey(final UserItem userItem) {
         return userItem.getId();
     }
 
@@ -81,7 +85,7 @@ abstract public class CustomUsersPresenter extends UsersListPresenter {
         onStart();
     }
 
-    private void onDeleteError(Throwable throwable) {
+    private void onDeleteError(final Throwable throwable) {
         getView().finishActionMode();
         onError(throwable);
     }
@@ -94,13 +98,13 @@ abstract public class CustomUsersPresenter extends UsersListPresenter {
     }
 
     protected String getCustomIds() {
-        StringBuilder stringBuilder = new StringBuilder();
-        List<CustomUser> users = getUsers();
+        final StringBuilder stringBuilder = new StringBuilder();
+        final List<CustomUser> users = getUsers();
 
         if (users.isEmpty()) return EMPTY;
 
         for (int i = 0; i < users.size(); i++) {
-            String key = users.get(i).getKey();
+            final String key = users.get(i).getKey();
             stringBuilder.append(key);
 
             if (i != users.size() - 1) stringBuilder.append(",");

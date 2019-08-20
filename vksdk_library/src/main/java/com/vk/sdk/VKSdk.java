@@ -384,7 +384,7 @@ public class VKSdk {
      * Checks if an access token exist and performs a try to use it again
      *
      * @param context            An application context for store an access token
-     * @param loginStateCallback if callback specified, {@link VKCallback#onResult(Object)} method will be called after login state changed
+     * @param loginStateCallback if callback specified, method will be called after login state changed
      * @return true, if an access token exists and not expired
      */
     public static boolean wakeUpSession(@NonNull final Context context, final VKCallback<LoginState> loginStateCallback) {

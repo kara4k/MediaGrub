@@ -27,7 +27,7 @@ public class AppModule {
 
     Context mContext;
 
-    public AppModule(Context context) {
+    public AppModule(final Context context) {
         mContext = context;
     }
 
@@ -39,23 +39,23 @@ public class AppModule {
 
     @Provides
     @Singleton
-    SharedPreferences provideSharedPrefs(Context context){
+    SharedPreferences provideSharedPrefs(final Context context){
         return android.preference.PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides
     @Singleton
-    DownloadManager provideDownloadManager(Context context){
+    DownloadManager provideDownloadManager(final Context context){
         return (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
     }
 
     @Provides
     @Singleton
-    NotificationManagerCompat provideNotifManager(Context context){
+    NotificationManagerCompat provideNotifManager(final Context context){
         if (Build.VERSION.SDK_INT >= 26){
-            NotificationManager notificationManager =
+            final NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+            final NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
                     "notification_channel",
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
@@ -66,10 +66,9 @@ public class AppModule {
 
     @Provides
     @Singleton
-    DaoSession provideDaoSession(Context context){
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "database");
-        Database db = helper.getWritableDb();
+    DaoSession provideDaoSession(final Context context){
+        final DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "database");
+        final Database db = helper.getWritableDb();
         return new DaoMaster(db).newSession();
     }
-
 }

@@ -18,15 +18,15 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class UserAdapter extends BaseAdapter<UserItem, UserAdapter.UserHolder> {
 
-    private ListPresenter<UserItem, UsersViewIF> mPresenter;
+    private final ListPresenter<UserItem, UsersViewIF> mPresenter;
 
-    public UserAdapter(ListPresenter<UserItem, UsersViewIF> presenter) {
+    public UserAdapter(final ListPresenter<UserItem, UsersViewIF> presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+    public UserHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.holder_user, parent, false);
         return new UserHolder(view);
     }
@@ -43,12 +43,12 @@ public class UserAdapter extends BaseAdapter<UserItem, UserAdapter.UserHolder> {
         TextView mNumTextView;
 
 
-        public UserHolder(View itemView) {
+        public UserHolder(final View itemView) {
             super(itemView);
         }
 
         @CallSuper
-        public void onBind(UserItem userItem, int position) {
+        public void onBind(final UserItem userItem, final int position) {
             super.onBind(userItem, position);
             mMainTextView.setText(userItem.getMainText());
             mAdditionTextView.setText(userItem.getAdditionText());
@@ -60,12 +60,12 @@ public class UserAdapter extends BaseAdapter<UserItem, UserAdapter.UserHolder> {
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(final View view) {
             mPresenter.onItemClicked(mItem, getAdapterPosition());
         }
 
         @Override
-        public boolean onLongClick(View view) {
+        public boolean onLongClick(final View view) {
             mPresenter.startActionMode(getAdapterPosition());
             return true;
         }

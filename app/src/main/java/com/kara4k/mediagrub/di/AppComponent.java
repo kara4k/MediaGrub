@@ -8,6 +8,7 @@ import com.kara4k.mediagrub.api.InstApi;
 import com.kara4k.mediagrub.api.TumblrApi;
 import com.kara4k.mediagrub.api.TwitterApi;
 import com.kara4k.mediagrub.api.VkApi;
+import com.kara4k.mediagrub.cache.CustomOneUsersCache;
 import com.kara4k.mediagrub.di.modules.AppModule;
 import com.kara4k.mediagrub.di.modules.RetrofitModule;
 import com.kara4k.mediagrub.download.DownloadService;

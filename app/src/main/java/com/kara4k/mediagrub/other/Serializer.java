@@ -22,45 +22,45 @@ public class Serializer {
     private static final String TEMP_FILE = "temp_file";
     private static final int SERIALIZATION_COUNT = 500;
 
-    private Context mContext;
+    private final Context mContext;
     private int mPosition;
     private int mSubPosition;
 
     @Inject
-    public Serializer(Context context) {
+    public Serializer(final Context context) {
         mContext = context;
     }
 
-    public int writeItems(List<MediaItem> items, int position) {
+    public int writeItems(final List<MediaItem> items, final int position) {
         mPosition = position;
-        List<MediaItem> pack = getPack(items, position);
+        final List<MediaItem> pack = getPack(items, position);
 
         deleteTempFileOnExist();
 
-        try (FileOutputStream fos = mContext.openFileOutput(TEMP_FILE, Context.MODE_PRIVATE);
-             ObjectOutputStream outputStream = new ObjectOutputStream(fos)) {
+        try (final FileOutputStream fos = mContext.openFileOutput(TEMP_FILE, Context.MODE_PRIVATE);
+             final ObjectOutputStream outputStream = new ObjectOutputStream(fos)) {
 
             outputStream.writeObject(pack);
             outputStream.flush();
             return mSubPosition;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             return position;
         }
     }
 
-    private List<MediaItem> getPack(List<MediaItem> items, int position){
+    private List<MediaItem> getPack(final List<MediaItem> items, final int position){
         if (items.size() < SERIALIZATION_COUNT) {
             mSubPosition = position;
             return items;
         }
 
-        MediaItem positionItem = items.get(position);
-        int half = SERIALIZATION_COUNT / 2;
-        int startIndex = (position - half < 0) ? 0 : position - half;
-        int endIndex = (position + half < items.size()) ? position + half : items.size();
+        final MediaItem positionItem = items.get(position);
+        final int half = SERIALIZATION_COUNT / 2;
+        final int startIndex = (position - half < 0) ? 0 : position - half;
+        final int endIndex = (position + half < items.size()) ? position + half : items.size();
 
-        List<MediaItem> list = new ArrayList<>(items.subList(startIndex, endIndex));
+        final List<MediaItem> list = new ArrayList<>(items.subList(startIndex, endIndex));
         mSubPosition = list.indexOf(positionItem);
 
         return list;
@@ -69,15 +69,15 @@ public class Serializer {
     public List<MediaItem> readItems() {
         List<MediaItem> mediaItems;
 
-        try (FileInputStream fis = mContext.openFileInput(TEMP_FILE);
-             ObjectInputStream inputStream = new ObjectInputStream(fis)) {
+        try (final FileInputStream fis = mContext.openFileInput(TEMP_FILE);
+             final ObjectInputStream inputStream = new ObjectInputStream(fis)) {
 
             mediaItems = (List<MediaItem>) inputStream.readObject();
             deleteTempFileOnExist();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             mediaItems = new ArrayList<>();
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
             mediaItems = new ArrayList<>();
         }
@@ -86,18 +86,18 @@ public class Serializer {
     }
 
     public void deleteTempFileOnExist() {
-        File filesDir = mContext.getFilesDir();
-        String tempFilePath = String.format(Locale.ENGLISH, "%s/%s",
+        final File filesDir = mContext.getFilesDir();
+        final String tempFilePath = String.format(Locale.ENGLISH, "%s/%s",
                 filesDir.getPath(), TEMP_FILE);
-        File tempFile = new File(tempFilePath);
+        final File tempFile = new File(tempFilePath);
 
         if (tempFile.exists()) {
             tempFile.delete();
         }
     }
 
-    public int getActualPosition(int lastPosition){
-        int step = lastPosition - mSubPosition;
+    public int getActualPosition(final int lastPosition){
+        final int step = lastPosition - mSubPosition;
         return mPosition + step;
     }
 

@@ -431,7 +431,7 @@ public class VKList<T extends VKApiModel & Parcelable & Identifiable> extends VK
          * Creates a list item of its representation return VK API from {@link org.json.JSONArray}
          * @param source representation of the object in the format returned by VK API.
          * @return created element to add to the list.
-         * @throws Exception if the exception is thrown, the element iterated this method will not be added to the list.
+         * @throws  if the exception is thrown, the element iterated this method will not be added to the list.
          */
         D parseObject(JSONObject source) throws Exception;
     }

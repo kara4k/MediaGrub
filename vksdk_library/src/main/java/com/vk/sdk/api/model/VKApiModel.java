@@ -66,7 +66,7 @@ public abstract class VKApiModel implements Parcelable {
      *
      * @return the Object stored in this model as a tag
      *
-     * @see #setTag(Object)
+     * @see
      * @see #getTag(int)
      */
     public Object getTag() {
@@ -80,7 +80,7 @@ public abstract class VKApiModel implements Parcelable {
      * @param tag an Object to tag the model with
      *
      * @see #getTag()
-     * @see #setTag(int, Object)
+     * @see
      */
     public void setTag(Object tag) {
         mTag = tag;
@@ -93,7 +93,7 @@ public abstract class VKApiModel implements Parcelable {
      *
      * @return the Object stored in this model as a tag
      *
-     * @see #setTag(int, Object)
+     * @see
      * @see #getTag()
      */
     public Object getTag(int key) {
@@ -106,7 +106,7 @@ public abstract class VKApiModel implements Parcelable {
      * to store data within a model without resorting to another
      * data structure.
      *
-     * @see #setTag(Object)
+     * @see
      * @see #getTag(int)
      */
     public void setTag(int key, final Object tag) {

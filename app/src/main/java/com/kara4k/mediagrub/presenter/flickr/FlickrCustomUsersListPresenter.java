@@ -19,12 +19,12 @@ public class FlickrCustomUsersListPresenter extends CustomOneUserOnlyPresenter {
     UserMapper mUserMapper;
 
     @Inject
-    public FlickrCustomUsersListPresenter(DaoSession daoSession) {
+    public FlickrCustomUsersListPresenter(final DaoSession daoSession) {
         super(daoSession);
     }
 
     @Override
-    public void requestSingleUserInfo(CustomUser customUser) throws Exception {
+    public void requestSingleUserInfo(final CustomUser customUser) throws Exception {
             mFlickrApi.getUserInfo(customUser.getKey())
                     .flatMap(mUserMapper)
                     .subscribeOn(Schedulers.io())
