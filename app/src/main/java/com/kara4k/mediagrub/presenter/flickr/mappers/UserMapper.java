@@ -14,7 +14,7 @@ import io.reactivex.functions.Function;
 
 public class UserMapper implements Function<UserResponse, Observable<UserItem>> {
 
-    private static final String PHOTO_URL_PATTERN = "http://farm%d.staticflickr.com/%s/buddyicons/%s.jpg";
+    private static final String PHOTO_URL_PATTERN = "https://farm%d.staticflickr.com/%s/buddyicons/%s.jpg";
     private static final String ZERO = "0";
     private static final String EMPTY = "";
 
