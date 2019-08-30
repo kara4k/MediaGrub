@@ -10,10 +10,12 @@ import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -24,7 +26,7 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
     private final List<UserItem> mUserItems = new ArrayList<>();
     private Observer<UserItem> singleUserObserver;
 
-    private CustomOneUsersCache customOneUsersCache = CustomOneUsersCache.getInstance();
+    private final CustomOneUsersCache customOneUsersCache = CustomOneUsersCache.getInstance();
 
     public CustomOneUserOnlyPresenter(final DaoSession daoSession) {
         super(daoSession);
@@ -48,10 +50,8 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
 
     private void getSingleUserInfo(final CustomUser customUser) throws Exception {
         final UserItem userItem = customOneUsersCache.getOrNull(customUser);
-
         if (userItem != null) {
-            singleUserObserver.onNext(userItem);
-            if (mUsersCount == 0) singleUserObserver.onComplete();
+            Observable.just(userItem).subscribeOn(Schedulers.io()).subscribe(singleUserObserver);
         } else {
             requestSingleUserInfo(customUser);
         }
@@ -86,11 +86,12 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
             @Override
             public void onError(final Throwable e) {
                 --mUsersCount;
+                this.onComplete();
             }
 
             @Override
             public void onComplete() {
-                if (mUsersCount == 0) onUsersListReady();
+                if (mUsersCount <= 0) onUsersListReady();
             }
         };
     }

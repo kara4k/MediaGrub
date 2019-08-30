@@ -38,7 +38,7 @@ public class RetrofitModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient(Context context) {
+    OkHttpClient provideOkHttpClient(final Context context) {
         return new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -46,7 +46,7 @@ public class RetrofitModule {
     }
 
     @NonNull
-    private Retrofit provideRetrofit(OkHttpClient client, String endpoint) {
+    private Retrofit provideRetrofit(final OkHttpClient client, final String endpoint) {
         return new Retrofit.Builder()
                 .baseUrl(endpoint)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,65 +58,65 @@ public class RetrofitModule {
     @Singleton
     @Provides
     @Named(VK)
-    Retrofit provideVkRetrofit(OkHttpClient client) {
+    Retrofit provideVkRetrofit(final OkHttpClient client) {
         return provideRetrofit(client, VK_ENDPOINT);
     }
 
     @Provides
     @Singleton
-    VkApi provideVkApi(@Named(VK) Retrofit retrofit) {
+    VkApi provideVkApi(@Named(VK) final Retrofit retrofit) {
         return retrofit.create(VkApi.class);
     }
 
     @Singleton
     @Provides
     @Named(INSTAGRAM)
-    Retrofit provideInstagramRetrofit(OkHttpClient client) {
+    Retrofit provideInstagramRetrofit(final OkHttpClient client) {
         return provideRetrofit(client, INSTAGRAM_ENDPOINT);
     }
 
     @Provides
     @Singleton
-    InstApi provideInstagramApi(@Named(INSTAGRAM) Retrofit retrofit) {
+    InstApi provideInstagramApi(@Named(INSTAGRAM) final Retrofit retrofit) {
         return retrofit.create(InstApi.class);
     }
 
     @Singleton
     @Provides
     @Named(TWITTER)
-    Retrofit provideTwitterRetrofit(OkHttpClient client) {
+    Retrofit provideTwitterRetrofit(final OkHttpClient client) {
         return provideRetrofit(client, TWITTER_ENDPOINT);
     }
 
     @Provides
     @Singleton
-    TwitterApi provideTwitterApi(@Named(TWITTER) Retrofit retrofit) {
+    TwitterApi provideTwitterApi(@Named(TWITTER) final Retrofit retrofit) {
         return retrofit.create(TwitterApi.class);
     }
 
     @Singleton
     @Provides
     @Named(TUMBLR)
-    Retrofit provideTumblrRetrofit(OkHttpClient client) {
+    Retrofit provideTumblrRetrofit(final OkHttpClient client) {
         return provideRetrofit(client, TUMBLR_ENDPOINT);
     }
 
     @Provides
     @Singleton
-    TumblrApi provideTumblrApi(@Named(TUMBLR) Retrofit retrofit) {
+    TumblrApi provideTumblrApi(@Named(TUMBLR) final Retrofit retrofit) {
         return retrofit.create(TumblrApi.class);
     }
 
     @Singleton
     @Provides
     @Named(FLICKR)
-    Retrofit provideFlickrRetrofit(OkHttpClient client) {
+    Retrofit provideFlickrRetrofit(final OkHttpClient client) {
         return provideRetrofit(client, FLICKR_ENDPOINT);
     }
 
     @Provides
     @Singleton
-    FlickrApi provideFlickrApi(@Named(FLICKR) Retrofit retrofit) {
+    FlickrApi provideFlickrApi(@Named(FLICKR) final Retrofit retrofit) {
         return retrofit.create(FlickrApi.class);
     }
 

@@ -24,14 +24,14 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
 
     @Inject
     CustomCreatorIF mView;
-    private CustomUserDao mCustomUserDao;
+    private final CustomUserDao mCustomUserDao;
     protected UserItem mUserItem;
 
-    public CustomCreatorPresenter(DaoSession daoSession) {
+    public CustomCreatorPresenter(final DaoSession daoSession) {
         mCustomUserDao = daoSession.getCustomUserDao();
     }
 
-    protected abstract  String convertInput(String input);
+    protected abstract String convertInput(String input);
 
     protected abstract void requestUserInfo(String id);
 
@@ -39,9 +39,9 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
 
     protected abstract int getUserType();
 
-    public void onSearch(String input) {
+    public void onSearch(final String input) {
         mView.hideKeyboard();
-        String id = convertInput(input.trim().toLowerCase());
+        final String id = convertInput(input.trim().toLowerCase());
         requestUserInfo(id);
     }
 
@@ -54,7 +54,7 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
                 .subscribe(this::onExistUsersReceive, this::onError);
     }
 
-    private void onExistUsersReceive(List<CustomUser> customUsers) {
+    private void onExistUsersReceive(final List<CustomUser> customUsers) {
         if (customUsers.isEmpty()) {
             Completable.fromAction(this::addUserToDb)
                     .subscribeOn(Schedulers.io())
@@ -71,7 +71,7 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
     }
 
     private void addUserToDb() {
-        CustomUser user = createUser();
+        final CustomUser user = createUser();
         mCustomUserDao.insert(user);
     }
 
@@ -84,33 +84,32 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
     }
 
     private CustomUser createUser() {
-        CustomUser customUser = new CustomUser();
+        final CustomUser customUser = new CustomUser();
         customUser.setKey(getDbKey());
         customUser.setService(getService());
         customUser.setType(getUserType());
         return customUser;
     }
 
-    protected String getDbKey(){
+    protected String getDbKey() {
         return mUserItem.getId();
     }
 
     @Override
-    public void onSubscribe(Disposable d) {
+    public void onSubscribe(final Disposable d) {
     }
 
     @Override
-    public void onSuccess(UserItem userItem) {
+    public void onSuccess(final UserItem userItem) {
         mUserItem = userItem;
         mView.showUserDetails(userItem);
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(final Throwable e) {
         mUserItem = null;
-        e.printStackTrace();
         mView.hideUserInfo();
-        mView.showError(e.getMessage());
+        mView.showError(null);
     }
 
     @Override

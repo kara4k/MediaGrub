@@ -13,6 +13,8 @@ import com.kara4k.mediagrub.presenter.base.CustomCreatorPresenter;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -72,7 +74,7 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
     }
 
     @Override
-    public void showUserDetails(UserItem userItem) {
+    public void showUserDetails(final UserItem userItem) {
         mMainTextView.setText(userItem.getMainText());
         mAdditionTextView.setText(userItem.getAdditionText());
         Picasso.with(getContext()).load(userItem.getPhotoUrl()).into(mPhotoImageView);
@@ -102,7 +104,7 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
     }
 
     @Override
-    public void showError(String message) {
-        showToast(message);
+    public void showError(final String message) {
+        showToast(message == null ? getString(R.string.custom_user_not_found) : message);
     }
 }

@@ -61,7 +61,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     }
 
     @Override
-    protected void onMenuInflated(Menu menu) {
+    protected void onMenuInflated(final Menu menu) {
         mSearchView = (SearchView) menu.findItem(R.id.menu_item_search).getActionView();
         mSearchView.setOnQueryTextListener(this);
     }
@@ -74,7 +74,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
         mRecyclerView.setAdapter(mAdapter = getAdapter());
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
                 if (!recyclerView.canScrollVertically(1)) {
                     getListPresenter().onScrollEnd();
                 }
@@ -88,12 +88,12 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     }
 
     @Override
-    public void setItems(List<T> list) {
+    public void setItems(final List<T> list) {
         mAdapter.setList(list);
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(final String message) {
         showToast(message);
     }
 
@@ -101,9 +101,9 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
         return null;
     }
 
-    private void setupHint(Hint hint) {
-        ImageView mHintImageView = mHintLayout.findViewById(R.id.hint_image);
-        TextView mHintTextView = mHintLayout.findViewById(R.id.hint_message);
+    private void setupHint(final Hint hint) {
+        final ImageView mHintImageView = mHintLayout.findViewById(R.id.hint_image);
+        final TextView mHintTextView = mHintLayout.findViewById(R.id.hint_message);
 
         mHintLayout.setOnClickListener(view -> onHintClicked());
         if (hint.getIconRes() != Hint.UNDEFINED) mHintImageView.setImageResource(hint.getIconRes());
@@ -118,7 +118,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     protected void onHintClicked() {}
 
     @Override
-    public void setToolbarTitle(String title, String subtitle) {
+    public void setToolbarTitle(final String title, final String subtitle) {
         setTitle(title, subtitle);
     }
 
@@ -143,12 +143,12 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
+    public boolean onQueryTextSubmit(final String query) {
         return false;
     }
 
     @Override
-    public boolean onQueryTextChange(String newText) {
+    public boolean onQueryTextChange(final String newText) {
         getListPresenter().onSearch(newText);
         return true;
     }
@@ -157,12 +157,12 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     public void startActionMode() {
     }
 
-    protected void setModeCallback(ActionMode.Callback callback) {
+    protected void setModeCallback(final ActionMode.Callback callback) {
         mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(callback);
     }
 
     @Override
-    public void setItemSelected(int position, boolean isSelected) {
+    public void setItemSelected(final int position, final boolean isSelected) {
         mAdapter.setItemSelected(position, isSelected);
     }
 
@@ -172,7 +172,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     }
 
     @Override
-    public void showSelectedCount(String count) {
+    public void showSelectedCount(final String count) {
         if (mActionMode != null) {
             mActionMode.setTitle(count);
         }
@@ -188,18 +188,18 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
 
     @Override
     public void onDeleteSelected() {
-        String title = getString(R.string.dialog_delete_title);
-        String message = getString(R.string.dialog_delete_selected);
-        DialogInterface.OnClickListener okListener = (dialogInterface, i)
+        final String title = getString(R.string.dialog_delete_title);
+        final String message = getString(R.string.dialog_delete_selected);
+        final DialogInterface.OnClickListener okListener = (dialogInterface, i)
                 -> getListPresenter().onDeleteSelectedConfirm();
 
         showConfirmDialog(title, message, okListener);
     }
 
     @Override
-    public void checkWriteSdPermissions(int requestCode) {
+    public void checkWriteSdPermissions(final int requestCode) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            int hasWriteSDCardPermission = ContextCompat.checkSelfPermission(getContext(),
+            final int hasWriteSDCardPermission = ContextCompat.checkSelfPermission(getContext(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
             if (hasWriteSDCardPermission == PackageManager.PERMISSION_DENIED) {
@@ -212,7 +212,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(final int requestCode, @NonNull final String[] permissions, @NonNull final int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
             getListPresenter().onStoragePermissionDenied(requestCode);
         } else {
@@ -220,7 +220,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
         }
     }
 
-    protected void setDrawerMode(int lockMode) {
+    protected void setDrawerMode(final int lockMode) {
         ((MainActivity) getActivity()).setDrawerMode(lockMode);
     }
 
@@ -235,7 +235,7 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
         protected abstract int getModeMenu();
 
         @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
             mode.getMenuInflater().inflate(getModeMenu(), menu);
             setDrawerMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             setSwipeLock(true);
@@ -243,19 +243,19 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(final ActionMode mode, final Menu menu) {
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {
+        public void onDestroyActionMode(final ActionMode mode) {
             getListPresenter().onActionModeDestroy();
             mAdapter.finishActionMode();
             setDrawerMode(DrawerLayout.LOCK_MODE_UNDEFINED);
             setSwipeLock(false);
         }
 
-        private void setSwipeLock(boolean isLocked) {
+        private void setSwipeLock(final boolean isLocked) {
             if (getParentFragment() instanceof ViewPagerFragment) {
                 ((ViewPagerFragment) getParentFragment()).setSwipeLocked(isLocked);
             }

@@ -18,15 +18,15 @@ public class UserMapper implements Function<UsersResponse, Observable<UserItem>>
     }
 
     @Override
-    public Observable<UserItem> apply(UsersResponse usersResponse) throws Exception {
+    public Observable<UserItem> apply(final UsersResponse usersResponse) throws Exception {
         return Observable.just(usersResponse)
                 .map(UsersResponse::getGraphql)
                 .map(Graphql::getUser)
                 .map(this::map);
     }
 
-    public UserItem map(User user) throws Exception {
-        UserItem userItem = new UserItem();
+    public UserItem map(final User user) throws Exception {
+        final UserItem userItem = new UserItem();
         userItem.setId(user.getId());
         userItem.setMainText(user.getFullName());
         userItem.setAdditionText(user.getUsername());

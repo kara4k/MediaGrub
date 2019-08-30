@@ -44,7 +44,7 @@ public abstract class ListPresenter<T, V extends ListViewIF<T>> extends Presente
 
     abstract protected boolean searchFilter(T t, String text);
 
-    public void onSearch(String text) {
+    public void onSearch(final String text) {
         if (mAllItems == null) return;
 
         Observable.fromIterable(mAllItems)
@@ -55,18 +55,18 @@ public abstract class ListPresenter<T, V extends ListViewIF<T>> extends Presente
                 .subscribe(this::onSearchSuccess, this::onError);
     }
 
-    private void onSearchSuccess(List<T> items) {
+    private void onSearchSuccess(final List<T> items) {
         mFilteredItems = items;
         mListView.setItems(items);
     }
 
     @Override
-    public void onSubscribe(Disposable d) {
+    public void onSubscribe(final Disposable d) {
         mCompositeDisposable.add(d);
     }
 
     @Override
-    public void onSuccess(List<T> list) {
+    public void onSuccess(final List<T> list) {
         if (mIsAppend) {
             mAllItems.addAll(list);
         } else {
@@ -77,7 +77,7 @@ public abstract class ListPresenter<T, V extends ListViewIF<T>> extends Presente
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(final Throwable e) {
         getView().hideLoading();
         e.printStackTrace();
         mListView.showError(e.getMessage());
@@ -91,7 +91,7 @@ public abstract class ListPresenter<T, V extends ListViewIF<T>> extends Presente
         return mAllItems;
     }
 
-    public void onItemClicked(T t, int position) {
+    public void onItemClicked(final T t, final int position) {
         if (mSelector.isActionMode()) {
             mSelector.toggleSelection(position);
         } else {
@@ -103,23 +103,23 @@ public abstract class ListPresenter<T, V extends ListViewIF<T>> extends Presente
         if (mHasMore) loadMore(mOffset);
     }
 
-    protected void setupOffset(int totalSize) {
+    protected void setupOffset(final int totalSize) {
         mOffset = mAllItems.size();
         mHasMore = mOffset < totalSize;
     }
 
     @CallSuper
-    protected void loadMore(int offset) {
+    protected void loadMore(final int offset) {
         mIsAppend = true;
     }
 
-    public void startActionMode(int position) {
+    public void startActionMode(final int position) {
         if (mSelector.isActionMode()) {
             mSelector.finishActionMode();
             return;
         }
 
-        List<T> itemsList = mFilteredItems == null ? mAllItems : mFilteredItems;
+        final List<T> itemsList = mFilteredItems == null ? mAllItems : mFilteredItems;
         mSelector.setItems(itemsList);
         mSelector.startSelection(mListView, position);
     }
@@ -143,10 +143,10 @@ public abstract class ListPresenter<T, V extends ListViewIF<T>> extends Presente
         getView().checkWriteSdPermissions(REQUEST_SD_WRITE);
     }
 
-    public void onStoragePermissionGranted(int requestCode) {
+    public void onStoragePermissionGranted(final int requestCode) {
     }
 
-    public void onStoragePermissionDenied(int requestCode) {
+    public void onStoragePermissionDenied(final int requestCode) {
         getView().showError("Storage permission denied");
     }
 }

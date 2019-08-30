@@ -39,7 +39,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getMenuRes();
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -49,8 +49,8 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayout(), container, false);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(getLayout(), container, false);
         ButterKnife.bind(this, view);
         onViewReady();
         return view;
@@ -66,24 +66,24 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         inflater.inflate(getMenuRes(), menu);
         onMenuInflated(menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    protected void onMenuInflated(Menu menu) {
+    protected void onMenuInflated(final Menu menu) {
     }
 
-    protected void showToast(String message) {
+    protected void showToast(final String message) {
         try {
-            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void showConfirmDialog(String title, String text, DialogInterface.OnClickListener okListener) {
+    protected void showConfirmDialog(final String title, final String text, final DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(getContext())
                 .setTitle(title)
                 .setMessage(text)
@@ -96,68 +96,68 @@ public abstract class BaseFragment extends Fragment {
         return ((App) getActivity().getApplication()).getAppComponent();
     }
 
-    protected void addFragment(Fragment fragment) {
+    protected void addFragment(final Fragment fragment) {
         ((BaseActivity) getActivity()).addFragment(fragment);
     }
 
-    protected void setTitle(String title, String subtitle) {
+    protected void setTitle(final String title, final String subtitle) {
         try {
-            ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            final ActionBar supportActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (supportActionBar != null) {
                 supportActionBar.setTitle(title);
                 supportActionBar.setSubtitle(subtitle);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
     protected void toggleActionBar() {
         try {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-            ActionBar supportActionBar = activity.getSupportActionBar();
+            final AppCompatActivity activity = (AppCompatActivity) getActivity();
+            final ActionBar supportActionBar = activity.getSupportActionBar();
             if (supportActionBar != null && supportActionBar.isShowing()) {
                 supportActionBar.hide();
             } else if (supportActionBar != null && !supportActionBar.isShowing()) {
                 supportActionBar.show();
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void activityStart(Intent intent) {
+    protected void activityStart(final Intent intent) {
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.from_in, R.anim.to_in);
     }
 
-    protected void activityStartForResult(Intent intent, int code) {
+    protected void activityStartForResult(final Intent intent, final int code) {
         startActivityForResult(intent, code);
         getActivity().overridePendingTransition(R.anim.from_in, R.anim.to_in);
     }
 
     protected ScreenConfig getScreenConfig() {
-        Point screenSize = getScreenSize();
-        int orientation = getOrientation();
+        final Point screenSize = getScreenSize();
+        final int orientation = getOrientation();
         return new ScreenConfig(screenSize, orientation);
     }
 
     protected Point getScreenSize() {
-        Point point = new Point();
+        final Point point = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(point);
         return point;
     }
 
     protected int getOrientation() {
-        int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
+        final int rotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
 
         if (rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) return PORTRAIT;
 
         return LANDSCAPE;
     }
 
-    protected void showLoadingDialog(String title, String message, int progress, int max, boolean isCancelable) {
-        DialogInterface.OnClickListener onCancel = (dialogInterface, i) -> onProgressDialogCancel();
+    protected void showLoadingDialog(final String title, final String message, final int progress, final int max, final boolean isCancelable) {
+        final DialogInterface.OnClickListener onCancel = (dialogInterface, i) -> onProgressDialogCancel();
 
         mProgressDialog = new ProgressDialog(getContext());
         mProgressDialog.setTitle(title);
@@ -182,7 +182,7 @@ public abstract class BaseFragment extends Fragment {
         mProgressDialog.show();
     }
 
-    public void updateDialogProgress(int progress) {
+    public void updateDialogProgress(final int progress) {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.setProgress(progress);
         }

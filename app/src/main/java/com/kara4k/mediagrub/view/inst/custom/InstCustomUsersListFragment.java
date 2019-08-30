@@ -49,13 +49,13 @@ public class InstCustomUsersListFragment
 
     @Override
     public void showUserCreator() {
-        Intent intent = UserCreatorActivity.newIntent(
+        final Intent intent = UserCreatorActivity.newIntent(
                 getContext(), CustomUser.INSTAGRAM, CustomUser.USER);
         activityStart(intent);
     }
 
     @Override
-    public void showAlbums(UserItem userItem) {
+    public void showAlbums(final UserItem userItem) {
         addFragment(InstPhotoListFragment.newInstance(userItem, null));
     }
 }

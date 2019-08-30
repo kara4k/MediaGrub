@@ -42,22 +42,22 @@ public class DownloadManager {
 
     private static final int NOTIFICATION_UPDATE = 1000;
 
-    private Context mContext;
-    private TaskDao mTaskDao;
-    private MediaItemDao mMediaItemDao;
-    private NotificationManagerCompat mNotifyManager;
+    private final Context mContext;
+    private final TaskDao mTaskDao;
+    private final MediaItemDao mMediaItemDao;
+    private final NotificationManagerCompat mNotifyManager;
 
-    private LongSparseArray<Task> mTasksArray = new LongSparseArray<>();
-    private LongSparseArray<Boolean> mRunningArray = new LongSparseArray<>();
-    private LongSparseArray<Boolean> mStoppedArray = new LongSparseArray<>();
-    private LongSparseArray<Boolean> mPausedArray = new LongSparseArray<>();
+    private final LongSparseArray<Task> mTasksArray = new LongSparseArray<>();
+    private final LongSparseArray<Boolean> mRunningArray = new LongSparseArray<>();
+    private final LongSparseArray<Boolean> mStoppedArray = new LongSparseArray<>();
+    private final LongSparseArray<Boolean> mPausedArray = new LongSparseArray<>();
 
-    private LongSparseArray<NotificationCompat.Builder> mBuilders = new LongSparseArray<>();
+    private final LongSparseArray<NotificationCompat.Builder> mBuilders = new LongSparseArray<>();
 
     private int notifyId = 1;
 
     @Inject
-    public DownloadManager(Context context, DaoSession daoSession, NotificationManagerCompat notificationManagerCompat) {
+    public DownloadManager(final Context context, final DaoSession daoSession, final NotificationManagerCompat notificationManagerCompat) {
         mContext = context;
         mTaskDao = daoSession.getTaskDao();
         mMediaItemDao = daoSession.getMediaItemDao();
@@ -76,11 +76,11 @@ public class DownloadManager {
                 .build().list();
     }
 
-    public boolean isInitialized(long taskId) {
+    public boolean isInitialized(final long taskId) {
         return mTasksArray.get(taskId, null) != null;
     }
 
-    public boolean isPaused(long taskId) {
+    public boolean isPaused(final long taskId) {
         return mPausedArray.get(taskId, false);
     }
 
@@ -88,14 +88,14 @@ public class DownloadManager {
         return mTasksArray.size() != 0;
     }
 
-    void pauseTask(long taskId) {
+    void pauseTask(final long taskId) {
         setTaskRunning(taskId, false);
         mPausedArray.put(taskId, true);
         mRunningArray.remove(taskId);
         showNotify(taskId);
     }
 
-    void resumeTask(long taskId) {
+    void resumeTask(final long taskId) {
         setTaskRunning(taskId, true);
         mRunningArray.put(taskId, true);
         mPausedArray.remove(taskId);
@@ -103,8 +103,8 @@ public class DownloadManager {
         showNotify(taskId);
     }
 
-    public void stopTask(long taskId) {
-        Task task = mTasksArray.get(taskId, null);
+    public void stopTask(final long taskId) {
+        final Task task = mTasksArray.get(taskId, null);
         if (task == null) return;
         mStoppedArray.put(taskId, true);
         mRunningArray.remove(taskId);
@@ -112,66 +112,66 @@ public class DownloadManager {
         hideNotify(taskId);
     }
 
-    private void hideNotify(long taskId) {
-        Task task = mTasksArray.get(taskId);
+    private void hideNotify(final long taskId) {
+        final Task task = mTasksArray.get(taskId);
         if (task != null) {
             mNotifyManager.cancel(task.getNotificationId());
         }
     }
 
-    private void showNotify(long taskId) {
-        Task task = mTasksArray.get(taskId, null);
+    private void showNotify(final long taskId) {
+        final Task task = mTasksArray.get(taskId, null);
         if (task == null) return;
 
         createTaskNotification(task);
     }
 
-    private void createTaskNotification(Task task) {
-        NotificationCompat.Builder builder = createBuilder(task);
+    private void createTaskNotification(final Task task) {
+        final NotificationCompat.Builder builder = createBuilder(task);
         mBuilders.put(task.getId(), builder);
         mNotifyManager.notify(task.getNotificationId(), builder.build());
     }
 
-    private void setTaskRunning(long taskId, boolean isRunning) {
-        Task task = mTasksArray.get(taskId);
+    private void setTaskRunning(final long taskId, final boolean isRunning) {
+        final Task task = mTasksArray.get(taskId);
         if (task != null) {
             task.setIsRunning(isRunning);
             mTaskDao.update(task);
         }
     }
 
-    private void startTasks(List<Task> taskList) {
+    private void startTasks(final List<Task> taskList) {
         Observable.fromIterable(taskList)
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::startTask, Throwable::printStackTrace);
     }
 
-    private void startTask(Task task) {
+    private void startTask(final Task task) {
         Completable.fromAction(() -> initTask(task))
                 .subscribeOn(Schedulers.computation())
                 .subscribe(() -> startDownload(mTasksArray.get(task.getId())), Throwable::printStackTrace);
     }
 
-    public void startTask(long taskId) {
+    public void startTask(final long taskId) {
         Completable.fromAction(() -> initTask(taskId))
                 .subscribeOn(Schedulers.computation())
                 .subscribe(() -> startDownload(mTasksArray.get(taskId)), Throwable::printStackTrace);
     }
 
-    private void initTask(long taskId) {
-        Task task = mTaskDao.queryBuilder().where(TaskDao.Properties.Id.eq(taskId)).unique();
+    private void initTask(final long taskId) {
+        final Task task = mTaskDao.queryBuilder().where(TaskDao.Properties.Id.eq(taskId)).unique();
         initTask(task);
     }
 
-    private void initTask(Task task) {
+    private void initTask(final Task task) {
         task.setCount(task.getTotal() - task.getMediaItems().size());
         task.setNotificationId(notifyId++);
         mTasksArray.put(task.getId(), task);
         createTaskNotification(task);
     }
 
-    private void startDownload(Task task) {
-        Long taskId = task.getId();
+    private void startDownload(final Task task) {
+        final Long taskId = task.getId();
         mRunningArray.put(taskId, true);
         setTaskRunning(taskId, true);
 
@@ -183,12 +183,12 @@ public class DownloadManager {
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Observer<MediaItem>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(final Disposable d) {
                         disposable[0] = d;
                     }
 
                     @Override
-                    public void onNext(MediaItem mediaItem) {
+                    public void onNext(final MediaItem mediaItem) {
                         if (mStoppedArray.get(taskId, false)) {
                             return;
                         }
@@ -199,7 +199,7 @@ public class DownloadManager {
                                 if (mStoppedArray.get(taskId, false)) {
                                     return;
                                 }
-                            } catch (InterruptedException e) {
+                            } catch (final InterruptedException e) {
                                 mNotifyManager.cancel(task.getNotificationId());
                             }
                         }
@@ -208,7 +208,7 @@ public class DownloadManager {
 
                         try {
                             downloadItem(task, mediaItem);
-                        } catch (Exception e) {
+                        } catch (final Exception e) {
                             e.printStackTrace();
                             return;
                         }
@@ -216,7 +216,7 @@ public class DownloadManager {
                         ++count;
                         task.setCount(count);
 
-                        long currentStamp = System.currentTimeMillis();
+                        final long currentStamp = System.currentTimeMillis();
                         if (currentStamp - time[0] > NOTIFICATION_UPDATE) {
                             sendProgressBroadcast(task);
                             updateProgressNotification(task);
@@ -227,7 +227,7 @@ public class DownloadManager {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(final Throwable e) {
                         e.printStackTrace();
                     }
 
@@ -258,14 +258,14 @@ public class DownloadManager {
                 });
     }
 
-    private boolean stopTask(MediaItem mediaItem) throws Exception {
-        Boolean isStopped = mStoppedArray.get(mediaItem.getMTaskId(), false);
+    private boolean stopTask(final MediaItem mediaItem) throws Exception {
+        final Boolean isStopped = mStoppedArray.get(mediaItem.getMTaskId(), false);
         return !isStopped;
     }
 
-    private NotificationCompat.Builder createBuilder(Task task) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, AppModule.NOTIFICATION_CHANNEL_ID);
-        String textProgress = String.format(Locale.ENGLISH, "%d/%d",
+    private NotificationCompat.Builder createBuilder(final Task task) {
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, AppModule.NOTIFICATION_CHANNEL_ID);
+        final String textProgress = String.format(Locale.ENGLISH, "%d/%d",
                 task.getCount(), task.getTotal());
 
         builder.setContentTitle(task.getUser())
@@ -281,44 +281,44 @@ public class DownloadManager {
         return builder;
     }
 
-    private void updateProgressNotification(Task task) {
-        Long taskId = task.getId();
-        NotificationCompat.Builder builder = mBuilders.get(taskId);
+    private void updateProgressNotification(final Task task) {
+        final Long taskId = task.getId();
+        final NotificationCompat.Builder builder = mBuilders.get(taskId);
 
         builder.setProgress(task.getTotal(), task.getCount(), false);
         builder.setContentInfo(String.format(Locale.ENGLISH, "%d/%d", task.getCount(), task.getTotal()));
         mNotifyManager.notify(task.getNotificationId(), builder.build());
     }
 
-    private void downloadItem(Task task, MediaItem mediaItem) throws IOException {
-        String subPath = task.getSubPath();
+    private void downloadItem(final Task task, final MediaItem mediaItem) throws IOException {
+        final String subPath = task.getSubPath();
         if (!isPathExist(subPath)) return;
 
-        String savePath = getSavePath(subPath, mediaItem);
+        final String savePath = getSavePath(subPath, mediaItem);
         if (isFileExist(savePath)) return;
 
         downloadItem(mediaItem, savePath);
         sendMediaScanBroadcast(savePath);
     }
 
-    private void sendMediaScanBroadcast(String savePath) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File file = new File(savePath);
+    private void sendMediaScanBroadcast(final String savePath) {
+        final Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        final File file = new File(savePath);
 
         if (file.exists()) {
-            Uri contentUri = Uri.fromFile(file);
+            final Uri contentUri = Uri.fromFile(file);
             mediaScanIntent.setData(contentUri);
             mContext.sendBroadcast(mediaScanIntent);
         }
     }
 
-    private void downloadItem(MediaItem mediaItem, String savePath) throws IOException {
-        URL url = new URL(mediaItem.getSourceUrl());
+    private void downloadItem(final MediaItem mediaItem, final String savePath) throws IOException {
+        final URL url = new URL(mediaItem.getSourceUrl());
 
-        try (InputStream input = new BufferedInputStream(url.openStream())) {
+        try (final InputStream input = new BufferedInputStream(url.openStream())) {
 
-            try (OutputStream output = new BufferedOutputStream(new FileOutputStream(savePath))) {
-                byte[] buffer = new byte[1024];
+            try (final OutputStream output = new BufferedOutputStream(new FileOutputStream(savePath))) {
+                final byte[] buffer = new byte[1024];
                 int bytesRead = 0;
 
                 while ((bytesRead = input.read(buffer, 0, buffer.length)) >= 0) {
@@ -329,7 +329,7 @@ public class DownloadManager {
         }
     }
 
-    public static String getSavePath(String subPath, MediaItem mediaItem) {
+    public static String getSavePath(final String subPath, final MediaItem mediaItem) {
         String extension = ".jpg";
 
         if (mediaItem.getType() == MediaItem.VIDEO) extension = ".mp4";
@@ -338,20 +338,20 @@ public class DownloadManager {
                 "%s/%s%s", subPath, mediaItem.getId(), extension);
     }
 
-    private boolean isFileExist(String savePath) {
-        File file = new File(savePath);
+    private boolean isFileExist(final String savePath) {
+        final File file = new File(savePath);
         return file.exists();
     }
 
-    private boolean isPathExist(String subPath) {
-        File file = new File(subPath);
+    private boolean isPathExist(final String subPath) {
+        final File file = new File(subPath);
         return file.exists() || file.mkdirs();
     }
 
-    private NotificationCompat.Action getPauseAction(Task task) {
-        int actionIcon;
-        String actionText;
-        int action;
+    private NotificationCompat.Action getPauseAction(final Task task) {
+        final int actionIcon;
+        final String actionText;
+        final int action;
 
         if (mPausedArray.get(task.getId(), false)) {
             actionIcon = R.drawable.ic_play_arrow_black_24dp;
@@ -362,39 +362,39 @@ public class DownloadManager {
             actionText = mContext.getString(R.string.notif_action_pause);
             action = DownloadsReceiver.PAUSE_TASK;
         }
-        PendingIntent pi = getActionPi(task, action);
+        final PendingIntent pi = getActionPi(task, action);
 
         return new NotificationCompat.Action(actionIcon, actionText, pi);
     }
 
-    private NotificationCompat.Action getStopAction(Task task) {
-        int actionIcon = R.drawable.ic_stop_black_24dp;
-        String actionText = mContext.getString(R.string.notif_action_stop);
-        int action = DownloadsReceiver.STOP_TASK;
-        PendingIntent pi = getActionPi(task, action);
+    private NotificationCompat.Action getStopAction(final Task task) {
+        final int actionIcon = R.drawable.ic_stop_black_24dp;
+        final String actionText = mContext.getString(R.string.notif_action_stop);
+        final int action = DownloadsReceiver.STOP_TASK;
+        final PendingIntent pi = getActionPi(task, action);
 
         return new NotificationCompat.Action(actionIcon, actionText, pi);
     }
 
-    private PendingIntent getActionPi(Task task, int action) {
-        int requestCode = task.getNotificationId() * 10 + action;
-        Intent intent = DownloadsReceiver.getActionIntent(task.getId(), action);
+    private PendingIntent getActionPi(final Task task, final int action) {
+        final int requestCode = task.getNotificationId() * 10 + action;
+        final Intent intent = DownloadsReceiver.getActionIntent(task.getId(), action);
         return PendingIntent.getBroadcast(mContext, requestCode,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private void sendProgressBroadcast(Task task) {
-        Intent intent = DownloadsReceiver.getProgressIntent(task);
+    private void sendProgressBroadcast(final Task task) {
+        final Intent intent = DownloadsReceiver.getProgressIntent(task);
         mContext.sendBroadcast(intent);
     }
 
-    private void sendTaskFinishedBroadcast(long taskId) {
-        Intent intent = DownloadsReceiver.getActionIntent(taskId, DownloadsReceiver.TASK_FINISHED);
+    private void sendTaskFinishedBroadcast(final long taskId) {
+        final Intent intent = DownloadsReceiver.getActionIntent(taskId, DownloadsReceiver.TASK_FINISHED);
         mContext.sendBroadcast(intent);
     }
 
-    private void sendTaskCompletedBroadcast(long taskId) {
-        Intent intent = DownloadsReceiver.getActionIntent(taskId, DownloadsReceiver.TASK_COMPLETED);
+    private void sendTaskCompletedBroadcast(final long taskId) {
+        final Intent intent = DownloadsReceiver.getActionIntent(taskId, DownloadsReceiver.TASK_COMPLETED);
         mContext.sendBroadcast(intent);
     }
 }

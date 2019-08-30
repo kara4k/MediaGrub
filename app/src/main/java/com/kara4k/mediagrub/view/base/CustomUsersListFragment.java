@@ -14,11 +14,11 @@ public abstract class CustomUsersListFragment<P extends CustomUsersPresenter>
     public static final int MENU_USER_ADD_ID = 115;
 
     @Override
-    protected void onMenuInflated(Menu menu) {
+    protected void onMenuInflated(final Menu menu) {
         super.onMenuInflated(menu);
         if (menu.findItem(MENU_USER_ADD_ID) != null) return;
 
-        MenuItem menuItem = menu.add(Menu.NONE, MENU_USER_ADD_ID,
+        final MenuItem menuItem = menu.add(Menu.NONE, MENU_USER_ADD_ID,
                 2, R.string.menu_item_add);
         menuItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menuItem.setIcon(R.drawable.ic_person_add_white_24dp);
@@ -30,7 +30,7 @@ public abstract class CustomUsersListFragment<P extends CustomUsersPresenter>
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case MENU_USER_ADD_ID:
                 getPresenter().onAddUser();
@@ -48,7 +48,7 @@ public abstract class CustomUsersListFragment<P extends CustomUsersPresenter>
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_item_action_select_all:
                     getPresenter().selectAll();

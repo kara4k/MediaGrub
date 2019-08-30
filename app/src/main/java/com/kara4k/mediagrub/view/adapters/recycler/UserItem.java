@@ -58,4 +58,15 @@ public class UserItem extends SelectableItem implements Serializable{
     public void setService(String service) {
         mService = service;
     }
+
+    @Override
+    public String toString() {
+        return "UserItem{" +
+                "mMainText='" + mMainText + '\'' +
+                ", mAdditionText='" + mAdditionText + '\'' +
+                ", mId='" + mId + '\'' +
+                ", mPhotoUrl='" + mPhotoUrl + '\'' +
+                ", mService='" + mService + '\'' +
+                '}';
+    }
 }

@@ -20,12 +20,12 @@ public class InstCustomUsersListPresenter extends CustomOneUserOnlyPresenter {
     UserMapper mUserMapper;
 
     @Inject
-    public InstCustomUsersListPresenter(DaoSession daoSession) {
+    public InstCustomUsersListPresenter(final DaoSession daoSession) {
         super(daoSession);
     }
 
     @Override
-    public void requestSingleUserInfo(CustomUser customUser) throws Exception {
+    public void requestSingleUserInfo(final CustomUser customUser) throws Exception {
         mInstApi.getUserInfo(customUser.getKey())
                 .flatMap(mUserMapper)
                 .subscribeOn(Schedulers.io())
@@ -33,7 +33,7 @@ public class InstCustomUsersListPresenter extends CustomOneUserOnlyPresenter {
     }
 
     @Override
-    protected String getKey(UserItem userItem) {
+    protected String getKey(final UserItem userItem) {
         return userItem.getAdditionText();
     }
 

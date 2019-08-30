@@ -13,13 +13,13 @@ public abstract class UsersListPresenter extends ListPresenter<UserItem, UsersVi
     }
 
     @Override
-    public void onSuccess(List<UserItem> list) {
+    public void onSuccess(final List<UserItem> list) {
         getView().hideLoading();
         super.onSuccess(list);
     }
 
     @Override
-    public void startActionMode(int position) {
+    public void startActionMode(final int position) {
         if (isActionModeEnabled()) super.startActionMode(position);
     }
 
@@ -28,12 +28,12 @@ public abstract class UsersListPresenter extends ListPresenter<UserItem, UsersVi
     }
 
     @Override
-    protected boolean searchFilter(UserItem userItem, String text) {
-        String mainText = userItem.getMainText() == null
+    protected boolean searchFilter(final UserItem userItem, final String text) {
+        final String mainText = userItem.getMainText() == null
                 ? EMPTY : userItem.getMainText().toLowerCase();
-        String additionText = userItem.getAdditionText() == null
+        final String additionText = userItem.getAdditionText() == null
                 ? EMPTY : userItem.getAdditionText().toLowerCase();
-        String query = text.toLowerCase();
+        final String query = text.toLowerCase();
 
         return mainText.contains(query) || additionText.contains(query);
     }
