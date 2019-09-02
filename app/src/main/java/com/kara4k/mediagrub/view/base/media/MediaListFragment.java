@@ -70,7 +70,7 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(final Configuration newConfig) {
         mMediaLayoutManager.onConfigurationChanged(getScreenConfig());
         super.onConfigurationChanged(newConfig);
     }
@@ -81,17 +81,17 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
     }
 
     @Override
-    protected void onMenuInflated(Menu menu) {
+    protected void onMenuInflated(final Menu menu) {
         super.onMenuInflated(menu);
         mMenu = menu;
         getMediaListPresenter().onMenuInflate();
     }
 
     @Override
-    public void setLayoutMenuItem(int layoutType) {
+    public void setLayoutMenuItem(final int layoutType) {
         if (mMenu == null) return;
 
-        MenuItem layoutItem;
+        final MenuItem layoutItem;
 
         if (mMenu.findItem(MENU_ITEM_LAYOUT_ID) == null) {
             layoutItem = mMenu.add(Menu.NONE, MENU_ITEM_LAYOUT_ID,
@@ -110,7 +110,7 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case MENU_ITEM_LAYOUT_ID:
                 getMediaListPresenter().onToggleLayout();
@@ -126,20 +126,20 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
 
     @Override
     public void showTaskIsCreating() {
-        String title = getString(R.string.dialog_task_prepare_title);
-        String message = getString(R.string.dialog_task_prepare_message);
+        final String title = getString(R.string.dialog_task_prepare_title);
+        final String message = getString(R.string.dialog_task_prepare_message);
 
         showLoadingDialog(title, message, UNDEFINED, UNDEFINED, false);
     }
 
     @Override
-    public void showAlbumLoadProgress(int progress, int max) {
-        String title = getString(R.string.dialog_title_loading);
+    public void showAlbumLoadProgress(final int progress, final int max) {
+        final String title = getString(R.string.dialog_title_loading);
         showLoadingDialog(title, null, progress, max, true);
     }
 
     @Override
-    public void updateAlbumProgress(int progress) {
+    public void updateAlbumProgress(final int progress) {
         updateDialogProgress(progress);
     }
 
@@ -149,10 +149,10 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
     }
 
     @Override
-    public void setLayout(int layoutType) {
+    public void setLayout(final int layoutType) {
         if (mMediaLayoutManager == null) {
             mMediaLayoutManager = new MediaLayoutManager(getContext(), mRecyclerView,
-                    (MediaAdapter) mAdapter, mLayoutManager);
+                    mAdapter, mLayoutManager);
         }
         mMediaLayoutManager.setLayout(layoutType, getOrientation());
     }
@@ -164,52 +164,54 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
     }
 
     @Override
-    public void showDetails(int position) {
-        Intent intent = MediaPageActivity.newIntent(getContext(), position);
+    public void showDetails(final int position) {
+        final Intent intent = MediaPageActivity.newIntent(getContext(), position);
         activityStartForResult(intent, REQUEST_POSITION);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_POSITION && resultCode == Activity.RESULT_OK) {
-            int position = data.getIntExtra(MediaPageActivity.POSITION, MediaPageActivity.EMPTY);
+            final int position = data.getIntExtra(MediaPageActivity.POSITION, MediaPageActivity.EMPTY);
             getMediaListPresenter().onLastDetailPosition(position);
         }
     }
 
     @Override
-    public void setCurrentPosition(int position) {
+    public void setCurrentPosition(final int position) {
         mMediaLayoutManager.setCurrentPosition(position);
     }
 
     @Override
-    public void startDownload(long taskId) {
+    public void startDownload(final long taskId) {
         finishActionMode();
-        Intent intent = new Intent(DownloadService.newIntent(getContext()));
+        final Intent intent = new Intent(DownloadService.newIntent(getContext()));
         DownloadService.setConnected(true);
         getActivity().startService(intent);
         getActivity().bindService(intent, new ServiceConnection() {
             @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                DownloadService service = ((DownloadService.Binder) iBinder).getService();
+            public void onServiceConnected(final ComponentName componentName, final IBinder iBinder) {
+                final DownloadService service = ((DownloadService.Binder) iBinder).getService();
                 service.startTask(taskId);
                 DownloadService.setConnected(false);
                 getActivity().unbindService(this);
             }
 
             @Override
-            public void onServiceDisconnected(ComponentName componentName) {
+            public void onServiceDisconnected(final ComponentName componentName) {
             }
         }, 0);
     }
 
-    protected void onOptionsSelected(MenuItem item) {}
+    protected void onOptionsSelected(final MenuItem item) {}
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMediaLayoutManager.onDestroy();
+        if (mMediaLayoutManager!= null){
+            mMediaLayoutManager.onDestroy();
+        }
     }
 
     class MediaListCallback extends ModeCallback {
@@ -220,7 +222,7 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_item_action_select_all:
                     getListPresenter().selectAll();
