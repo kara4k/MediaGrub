@@ -19,33 +19,33 @@ class MediaLayoutManager {
     private MediaAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    MediaLayoutManager(Context context, RecyclerView recyclerView, MediaAdapter adapter, RecyclerView.LayoutManager layoutManager) {
+    MediaLayoutManager(final Context context, final RecyclerView recyclerView, final MediaAdapter adapter, final RecyclerView.LayoutManager layoutManager) {
         mContext = context;
         mRecyclerView = recyclerView;
         mAdapter = adapter;
         mLayoutManager = layoutManager;
     }
 
-    public void onConfigurationChanged(ScreenConfig screenConfig) {
-        int position = getCurrentPosition();
+    public void onConfigurationChanged(final ScreenConfig screenConfig) {
+        final int position = getCurrentPosition();
 
         if (mLayoutManager instanceof GridLayoutManager) {
-            GridLayoutManager gridLayoutManager = getGridLayoutManager(screenConfig.getOrientation());
-            mRecyclerView.setLayoutManager(gridLayoutManager);
+            mLayoutManager = createGridLayoutManager(screenConfig.getOrientation());
+            mRecyclerView.setLayoutManager(mLayoutManager);
         }
 
         mAdapter.setScreenConfig(screenConfig);
         mRecyclerView.scrollToPosition(position);
     }
 
-    public void setLayout(int layoutType, int orientation) {
-        int position = getCurrentPosition();
-        RecyclerView.LayoutManager layoutManager;
+    public void setLayout(final int layoutType, final int orientation) {
+        final int position = getCurrentPosition();
+        final RecyclerView.LayoutManager layoutManager;
 
         if (layoutType == MediaAdapter.LINEAR) {
             layoutManager = new LinearLayoutManager(mContext);
         } else {
-            layoutManager = getGridLayoutManager(orientation);
+            layoutManager = createGridLayoutManager(orientation);
         }
 
         mAdapter.setHolderViewType(layoutType);
@@ -54,8 +54,8 @@ class MediaLayoutManager {
     }
 
     @NonNull
-    private GridLayoutManager getGridLayoutManager(int orientation) {
-        int spanCount = (orientation == PORTRAIT) ? 2 : 3;
+    private GridLayoutManager createGridLayoutManager(final int orientation) {
+        final int spanCount = (orientation == PORTRAIT) ? 2 : 3;
         return new GridLayoutManager(mContext, spanCount);
     }
 
@@ -75,7 +75,7 @@ class MediaLayoutManager {
         mAdapter = null;
     }
 
-    public void setCurrentPosition(int position) {
+    public void setCurrentPosition(final int position) {
         mRecyclerView.scrollToPosition(position);
     }
 }
