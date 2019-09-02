@@ -57,7 +57,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
     }
 
     @Override
-    public void showError(String message) {
+    public void showError(final String message) {
         showToast(message);
     }
 
@@ -72,7 +72,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
     @SuppressLint("RestrictedApi")
     @Override
     protected void onViewReady() {
-        MediaItem mediaItem = (MediaItem) getArguments().getSerializable(MEDIA_ITEM);
+        final MediaItem mediaItem = (MediaItem) getArguments().getSerializable(MEDIA_ITEM);
         mImageView.setOnClickListener(view -> mPresenter.onPhotoClicked());
         mPresenter.onStart(mediaItem);
         setUserVisibleHint(isMenuVisible());
@@ -92,7 +92,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    public void setUserVisibleHint(final boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (mPresenter != null) {
             mPresenter.onVisible(isVisibleToUser);
@@ -100,7 +100,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_share:
                 mPresenter.onShareClicked();
@@ -111,21 +111,24 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
     }
 
     @Override
-    public void showSendTo(String sourceUrl) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
+    public void showSendTo(final String sourceUrl) {
+        final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, sourceUrl);
         startActivity(Intent.createChooser(intent, getString(R.string.chooser_send_to)));
     }
 
     @Override
-    public void showPhoto(MediaItem mediaItem) {
+    public void showPhoto(final MediaItem mediaItem) {
         mVideoView.setVisibility(View.GONE);
         mImageView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
 
-        String sourceUrl = mediaItem.getSourceUrl();
-        Picasso.with(getContext()).load(sourceUrl).into(mImageView, new Callback() {
+        final String sourceUrl = mediaItem.getSourceUrl();
+        Picasso.with(getContext()).load(sourceUrl)
+                .resize(3400, 3400)
+                .onlyScaleDown()
+                .into(mImageView, new Callback() {
             @Override
             public void onSuccess() {
                 mProgressBar.setVisibility(View.GONE);
@@ -140,7 +143,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
     }
 
     @Override
-    public void showVideo(MediaItem mediaItem) {
+    public void showVideo(final MediaItem mediaItem) {
         mImageView.setVisibility(View.GONE);
         mVideoView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
@@ -150,7 +153,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
         setupVideoView();
         showDescription(mediaItem);
 
-        Uri videoUri = Uri.parse(mediaItem.getSourceUrl());
+        final Uri videoUri = Uri.parse(mediaItem.getSourceUrl());
         mVideoView.setVideoURI(videoUri);
     }
 
@@ -166,9 +169,9 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
         mMediaController.hide();
     }
 
-    private void showDescription(MediaItem mediaItem) {
-        String title = mediaItem.getTitle();
-        String description = mediaItem.getDescription();
+    private void showDescription(final MediaItem mediaItem) {
+        final String title = mediaItem.getTitle();
+        final String description = mediaItem.getDescription();
 
         if (title != null) mTitleTextView.setText(title);
         if (description != null) mDescTextView.setText(description);
@@ -188,10 +191,10 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
         toggleActionBar();
     }
 
-    public static MediaPageFragment newInstance(MediaItem mediaItem) {
-        Bundle args = new Bundle();
+    public static MediaPageFragment newInstance(final MediaItem mediaItem) {
+        final Bundle args = new Bundle();
         args.putSerializable(MEDIA_ITEM, mediaItem);
-        MediaPageFragment fragment = new MediaPageFragment();
+        final MediaPageFragment fragment = new MediaPageFragment();
         fragment.setArguments(args);
         return fragment;
     }
