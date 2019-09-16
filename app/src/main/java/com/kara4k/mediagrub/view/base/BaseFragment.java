@@ -76,11 +76,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showToast(final String message) {
-        try {
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     protected void showConfirmDialog(final String title, final String text, final DialogInterface.OnClickListener okListener) {

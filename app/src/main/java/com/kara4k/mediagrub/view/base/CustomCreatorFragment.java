@@ -105,6 +105,10 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
 
     @Override
     public void showError(final String message) {
-        showToast(message == null ? getString(R.string.custom_user_not_found) : message);
+        try {
+            showToast(message == null ? getString(R.string.custom_user_not_found) : message);
+        } catch (Exception e) {
+            // TODO: 9/16/19 android 9 debug (context issues here)
+        }
     }
 }

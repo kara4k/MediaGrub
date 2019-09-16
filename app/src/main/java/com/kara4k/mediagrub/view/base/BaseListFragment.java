@@ -227,7 +227,11 @@ public abstract class BaseListFragment<T extends SelectableItem, H extends BaseH
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getListPresenter().onDestroy();
+
+        final ListPresenter listPresenter = getListPresenter();
+        if (listPresenter != null){
+            listPresenter.onDestroy();
+        }
     }
 
     protected abstract class ModeCallback implements ActionMode.Callback {

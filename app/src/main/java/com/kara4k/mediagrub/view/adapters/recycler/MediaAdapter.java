@@ -1,6 +1,7 @@
 package com.kara4k.mediagrub.view.adapters.recycler;
 
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,60 +22,55 @@ public class MediaAdapter extends BaseAdapter<MediaItem, MediaAdapter.MediaHolde
     public static final int LINEAR = 0;
     public static final int GRID = 1;
 
-    private MediaListPresenter mPresenter;
+    private final MediaListPresenter mPresenter;
     private int mHolderViewType;
     private ScreenConfig mScreenConfig;
     private boolean mIsActionMode;
 
-    public MediaAdapter(MediaListPresenter presenter, ScreenConfig screenConfig) {
+    public MediaAdapter(final MediaListPresenter presenter, final ScreenConfig screenConfig) {
         mPresenter = presenter;
         mScreenConfig = screenConfig;
     }
 
+    @NonNull
     @Override
-    public MediaHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int holderLayout = getHolderLayout(viewType);
-        View view = LayoutInflater.from(parent.getContext())
+    public MediaHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final int holderLayout = getHolderLayout(viewType);
+        final View view = LayoutInflater.from(parent.getContext())
                 .inflate(holderLayout, parent, false);
         return new MediaHolder(view);
     }
 
-    private int getHolderLayout(int viewType) {
-        int layoutRes;
-
+    private int getHolderLayout(final int viewType) {
         switch (viewType) {
-            case LINEAR:
-                layoutRes = R.layout.holder_media_linear;
-                break;
             case GRID:
-                layoutRes = R.layout.holder_media_grid;
-                break;
+                return R.layout.holder_media_grid;
+            case LINEAR:
             default:
-                layoutRes = R.layout.holder_media_linear;
+                return R.layout.holder_media_linear;
         }
-        return layoutRes;
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(final int position) {
         return mHolderViewType;
     }
 
-    public void setHolderViewType(int holderViewType) {
+    public void setHolderViewType(final int holderViewType) {
         mHolderViewType = holderViewType;
     }
 
-    public void setScreenConfig(ScreenConfig screenConfig) {
+    public void setScreenConfig(final ScreenConfig screenConfig) {
         mScreenConfig = screenConfig;
         notifyDataSetChanged();
     }
 
     @Override
-    public void setItemSelected(int position, boolean isSelected) {
+    public void setItemSelected(final int position, final boolean isSelected) {
         getList().get(position).setSelected(isSelected);
     }
 
-    public void setActionMode(boolean actionMode) {
+    public void setActionMode(final boolean actionMode) {
         mIsActionMode = actionMode;
     }
 
@@ -95,12 +91,12 @@ public class MediaAdapter extends BaseAdapter<MediaItem, MediaAdapter.MediaHolde
         @BindView(R.id.addition_text_view)
         TextView mAdditionTextView;
 
-        public MediaHolder(View itemView) {
+        public MediaHolder(final View itemView) {
             super(itemView);
         }
 
         @Override
-        public void onBind(MediaItem mediaItem, int position) {
+        public void onBind(final MediaItem mediaItem, final int position) {
             super.onBind(mediaItem, position);
             setPreviewSize();
             Picasso.with(mContext).load(mediaItem.getThumbUrl()).into(mPreviewImageView);
@@ -111,7 +107,7 @@ public class MediaAdapter extends BaseAdapter<MediaItem, MediaAdapter.MediaHolde
 
         private void setPreviewSize() {
             if (mHolderViewType == GRID) {
-                int size = calcImageViewSide();
+                final int size = calcImageViewSide();
 
                 mPreviewImageView.getLayoutParams().height = size;
                 mPreviewImageView.getLayoutParams().width = size;
@@ -119,14 +115,14 @@ public class MediaAdapter extends BaseAdapter<MediaItem, MediaAdapter.MediaHolde
         }
 
         private int calcImageViewSide() {
-            int orientation = mScreenConfig.getOrientation();
-            int screenWidth = mScreenConfig.getScreenSize().x;
+            final int orientation = mScreenConfig.getOrientation();
+            final int screenWidth = mScreenConfig.getScreenSize().x;
 
             return (orientation == BaseFragment.PORTRAIT) ? screenWidth / 2 : screenWidth / 3;
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(final View view) {
             toggleSelection();
             mPresenter.onItemClicked(mItem, getAdapterPosition());
         }
@@ -138,7 +134,7 @@ public class MediaAdapter extends BaseAdapter<MediaItem, MediaAdapter.MediaHolde
         }
 
         @Override
-        public boolean onLongClick(View view) {
+        public boolean onLongClick(final View view) {
             mPresenter.startActionMode(getAdapterPosition());
             toggleSelection();
             return true;

@@ -209,6 +209,7 @@ public abstract class MediaListFragment extends BaseListFragment<MediaItem, Medi
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         if (mMediaLayoutManager!= null){
             mMediaLayoutManager.onDestroy();
         }

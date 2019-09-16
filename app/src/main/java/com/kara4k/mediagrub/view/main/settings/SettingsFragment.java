@@ -20,7 +20,7 @@ public class SettingsFragment extends PreferenceFragment {
     private static final String PRIVACY_POLICY = "policy";
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
         setVersionInfo();
@@ -28,28 +28,32 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void setVersionInfo() {
-        Preference versionPref = findPreference(VERSION_KEY);
+        final Preference versionPref = findPreference(VERSION_KEY);
         try {
-            PackageInfo packageInfo = getActivity().getPackageManager()
+            final PackageInfo packageInfo = getActivity().getPackageManager()
                     .getPackageInfo(getActivity().getPackageName(), 0);
-            String versionName = packageInfo.versionName;
-            int versionCode = packageInfo.versionCode;
-            String summary = String.format(Locale.ENGLISH, "%s (%d)",
+            final String versionName = packageInfo.versionName;
+            final int versionCode = packageInfo.versionCode;
+            final String summary = String.format(Locale.ENGLISH, "%s (%d)",
                     versionName, versionCode);
 
             versionPref.setSummary(summary);
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (final PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     private void setPrivacyPolicy() {
-        Preference policyPref = findPreference(PRIVACY_POLICY);
+        final Preference policyPref = findPreference(PRIVACY_POLICY);
 
-        policyPref.setOnPreferenceClickListener(preference -> {
-            getActivity().getBaseContext().startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(getString(R.string.privacy_policy_link))));
-            return false;
+        policyPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(final Preference preference) {
+                getActivity().getBaseContext().startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(getString(R.string.privacy_policy_link))));
+
+                return false;
+            }
         });
 
     }
