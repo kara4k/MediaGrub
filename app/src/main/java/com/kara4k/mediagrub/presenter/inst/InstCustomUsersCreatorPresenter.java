@@ -22,22 +22,23 @@ public class InstCustomUsersCreatorPresenter extends CustomCreatorPresenter {
     UserMapper mUserMapper;
 
     @Inject
-    public InstCustomUsersCreatorPresenter(DaoSession daoSession) {
+    public InstCustomUsersCreatorPresenter(final DaoSession daoSession) {
         super(daoSession);
     }
 
     @Override
-    protected String convertInput(String input) {
+    protected String convertInput(final String input) {
         if (input.startsWith(URL_S)) {
-            String[] split = input.split("/");
+            final String[] split = input.split("/");
 
             if (split.length > 3) {
-                String name = split[3];
+                final String name = split[3];
 
                 if (name.equals(P) && split.length > 5) {
-                    String[] takenByName = split[5].split("=");
+                    final String[] takenByName = split[5].split("=");
                     if (takenByName.length > 1) return takenByName[1];
                 }
+
                 return name;
             }
         }
@@ -45,9 +46,9 @@ public class InstCustomUsersCreatorPresenter extends CustomCreatorPresenter {
     }
 
     @Override
-    protected void requestUserInfo(String username) {
+    protected void requestUserInfo(final String username) {
         mInstApi.getUserInfo(username)
-                .flatMap(mUserMapper)
+                .flatMap(response -> mUserMapper.apply(response, username))
                 .singleElement()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,7 +56,7 @@ public class InstCustomUsersCreatorPresenter extends CustomCreatorPresenter {
     }
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(final Throwable e) {
         super.onError(e);
     }
 

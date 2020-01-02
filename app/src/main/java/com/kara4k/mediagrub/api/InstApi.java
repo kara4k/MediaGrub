@@ -7,17 +7,12 @@ import com.kara4k.mediagrub.model.inst.search.SearchResponse;
 import com.kara4k.mediagrub.model.inst.users.UsersResponse;
 
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface InstApi {
-
-    @GET("{name}/?__a=1")
-    Observable<UsersResponse> getUserInfo(@Path("name") String username);
 
     @Headers({
             "Cookie: mid=Wq_2zAAEAAEIRbn1zTbEDdwYCfpz; csrftoken=37fFmpCZiqo3q4g0whDbS463Eqppu8hz; rur=FTW; ig_pr=1; ig_vh=658; ig_or=landscape-primary; ig_vw=234; ",
@@ -33,4 +28,7 @@ public interface InstApi {
 
     @GET("graphql/query/?query_hash=477b65a610463740ccdb83135b2014db")
     Call<DetailedInfo> getDetailedIno(@Query("variables") String variables);
+
+    @GET("web/search/topsearch/")
+    Observable<UsersResponse> getUserInfo(@Query("query") String username);
 }

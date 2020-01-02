@@ -27,7 +27,7 @@ public class InstCustomUsersListPresenter extends CustomOneUserOnlyPresenter {
     @Override
     public void requestSingleUserInfo(final CustomUser customUser) throws Exception {
         mInstApi.getUserInfo(customUser.getKey())
-                .flatMap(mUserMapper)
+                .flatMap(response -> mUserMapper.apply(response, customUser.getKey()))
                 .subscribeOn(Schedulers.io())
                 .subscribe(getSingleUserObserver());
     }

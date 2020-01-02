@@ -30,7 +30,11 @@
         android:layout_above="@id/desc_text_view"
         android:layout_marginTop="@dimen/dimen_default"
         android:gravity="center"
-        android:maxLines="2"
+        android:textIsSelectable="true"
+        android:maxLines="20"
+        android:enabled="true"
+        android:focusable="true"
+        android:longClickable="true"
         android:textColor="@android:color/white"
         android:textStyle="bold"/>
 
@@ -39,7 +43,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:maxLines="3"
+        android:textIsSelectable="true"
+        android:maxLines="20"
+        android:enabled="true"
+        android:focusable="true"
+        android:longClickable="true"
         android:textColor="@android:color/white"/>
 
     <ProgressBar

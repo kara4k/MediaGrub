@@ -3,6 +3,8 @@ package com.kara4k.mediagrub.di.modules;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kara4k.mediagrub.api.FlickrApi;
 import com.kara4k.mediagrub.api.InstApi;
 import com.kara4k.mediagrub.api.TumblrApi;
@@ -47,9 +49,13 @@ public class RetrofitModule {
 
     @NonNull
     private Retrofit provideRetrofit(final OkHttpClient client, final String endpoint) {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         return new Retrofit.Builder()
                 .baseUrl(endpoint)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();

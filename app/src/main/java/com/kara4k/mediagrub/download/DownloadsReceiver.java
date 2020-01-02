@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 
 import com.kara4k.mediagrub.model.database.Task;
 
@@ -26,9 +25,9 @@ public class DownloadsReceiver extends BroadcastReceiver {
     public static final int TASK_FINISHED = 5;
     public static final int TASK_COMPLETED = 6;
 
-    private ReceiverCallback mCallback;
+    private final ReceiverCallback mCallback;
 
-    public DownloadsReceiver(ReceiverCallback callback) {
+    public DownloadsReceiver(final ReceiverCallback callback) {
         mCallback = callback;
     }
 
@@ -48,12 +47,12 @@ public class DownloadsReceiver extends BroadcastReceiver {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        long taskId = intent.getLongExtra(TASK_ID, EMPTY);
+    public void onReceive(final Context context, final Intent intent) {
+        final long taskId = intent.getLongExtra(TASK_ID, EMPTY);
 
         if (taskId == EMPTY || mCallback == null) return;
 
-        int taskAction = intent.getIntExtra(TASK_ACTION, EMPTY);
+        final int taskAction = intent.getIntExtra(TASK_ACTION, EMPTY);
 
         switch (taskAction) {
             case RESUME_TASK:
@@ -66,8 +65,8 @@ public class DownloadsReceiver extends BroadcastReceiver {
                 mCallback.onStopTask(taskId);
                 break;
             case TASK_PROGRESS:
-                int progress = intent.getIntExtra(PROGRESS, EMPTY);
-                int max = intent.getIntExtra(MAX, EMPTY);
+                final int progress = intent.getIntExtra(PROGRESS, EMPTY);
+                final int max = intent.getIntExtra(MAX, EMPTY);
                 if (progress != EMPTY || max != EMPTY) mCallback.onProgress(taskId, progress, max);
                 break;
             case TASK_FINISHED:
@@ -83,15 +82,15 @@ public class DownloadsReceiver extends BroadcastReceiver {
         return new IntentFilter(ACTION_MANAGE_TASKS);
     }
 
-    public static Intent getActionIntent(long taskId, int action) {
-        Intent intent = new Intent(DownloadsReceiver.ACTION_MANAGE_TASKS);
+    public static Intent getActionIntent(final long taskId, final int action) {
+        final Intent intent = new Intent(DownloadsReceiver.ACTION_MANAGE_TASKS);
         intent.putExtra(DownloadsReceiver.TASK_ID, taskId);
         intent.putExtra(DownloadsReceiver.TASK_ACTION, action);
         return intent;
     }
 
-    public static Intent getProgressIntent(Task task) {
-        Intent intent = new Intent(ACTION_MANAGE_TASKS);
+    public static Intent getProgressIntent(final Task task) {
+        final Intent intent = new Intent(ACTION_MANAGE_TASKS);
         intent.putExtra(DownloadsReceiver.TASK_ID, task.getId());
         intent.putExtra(DownloadsReceiver.TASK_ACTION, DownloadsReceiver.TASK_PROGRESS);
         intent.putExtra(DownloadsReceiver.PROGRESS, task.getCount());
