@@ -17,7 +17,7 @@ public class UsersMapper implements Function<UsersResponse, Observable<UserItem>
     }
 
     @Override
-    public Observable<UserItem> apply(UsersResponse usersResponse) throws Exception {
+    public Observable<UserItem> apply(final UsersResponse usersResponse) throws Exception {
         return Observable.just(usersResponse)
                 .filter(this::filterResponseError)
                 .map(UsersResponse::getResponse)
@@ -25,25 +25,26 @@ public class UsersMapper implements Function<UsersResponse, Observable<UserItem>
                 .map(this::map);
     }
 
-    private boolean filterResponseError(UsersResponse response) throws Exception {
+    private boolean filterResponseError(final UsersResponse response) throws Exception {
         if (response.getResponse() == null && response.getResponseError() != null) {
-            String errorMsg = response.getResponseError().getErrorMsg();
+            final String errorMsg = response.getResponseError().getErrorMsg();
 
             throw new Exception(errorMsg);
         }
         return true;
     }
 
-    public UserItem map(Response response) throws Exception {
-        UserItem userItem = new UserItem();
-        String id = String.valueOf(response.getId());
-        String mainText = String.format("%s %s", response.getFirstName(), response.getLastName());
+    public UserItem map(final Response response) throws Exception {
+        final UserItem userItem = new UserItem();
+        final String id = String.valueOf(response.getId());
+        final String mainText = String.format("%s %s", response.getFirstName(), response.getLastName());
 
         userItem.setId(id);
         userItem.setMainText(mainText);
         userItem.setAdditionText(id);
         userItem.setPhotoUrl(response.getPhoto100());
         userItem.setService(UserItem.VKONTAKTE);
+
         return userItem;
     }
 

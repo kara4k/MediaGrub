@@ -4,6 +4,7 @@ package com.kara4k.mediagrub.di.modules;
 import com.kara4k.mediagrub.di.scopes.PerActivity;
 import com.kara4k.mediagrub.view.base.AuthViewIF;
 import com.kara4k.mediagrub.view.base.CustomCreatorIF;
+import com.kara4k.mediagrub.view.base.UserSearchIF;
 import com.kara4k.mediagrub.view.base.UsersViewIF;
 import com.kara4k.mediagrub.view.base.ViewIF;
 import com.kara4k.mediagrub.view.base.media.AlbumViewIF;
@@ -77,4 +78,8 @@ public class ViewModule {
     @Provides
     @PerActivity
     CustomCreatorIF provideCustomCreatorIF() {return (CustomCreatorIF) mViewIF;}
+
+    @Provides
+    @PerActivity
+    UserSearchIF provideUserSearchIF() {return (UserSearchIF) mViewIF;}
 }

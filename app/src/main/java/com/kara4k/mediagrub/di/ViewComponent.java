@@ -14,6 +14,7 @@ import com.kara4k.mediagrub.view.inst.InstPhotoListFragment;
 import com.kara4k.mediagrub.view.inst.custom.InstCustomUsersCreatorFragment;
 import com.kara4k.mediagrub.view.inst.custom.InstCustomUsersListFragment;
 import com.kara4k.mediagrub.view.inst.search.InstPhotoSearchFragment;
+import com.kara4k.mediagrub.view.inst.search.InstUserSearchFragment;
 import com.kara4k.mediagrub.view.main.MainActivity;
 import com.kara4k.mediagrub.view.main.downloads.ActiveTasksFragment;
 import com.kara4k.mediagrub.view.main.downloads.CompletedTasksFragment;
@@ -73,6 +74,8 @@ public interface ViewComponent {
     void injectInstCustomUsers(InstCustomUsersListFragment fragment);
 
     void injectInstCustomUsersCreator(InstCustomUsersCreatorFragment fragment);
+
+    void injectInstUserSearchFragment(InstUserSearchFragment fragment);
 
     void injectInstPhotoListFragment(InstPhotoListFragment fragment);
 

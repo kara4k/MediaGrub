@@ -37,6 +37,11 @@ public abstract class UsersListFragment<T extends UsersListPresenter>
 
     }
 
+    @Override
+    public void showUserSearch() {
+
+    }
+
     protected T getPresenter() {
         return mPresenter;
     }

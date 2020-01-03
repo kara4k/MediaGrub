@@ -1,5 +1,6 @@
 <resources>
     <string name="menu_item_search">Поиск</string>
+    <string name="menu_item_search_accounts">Поиск аккаунтов</string>
     <string name="vp_title_friends">Друзья</string>
     <string name="vp_title_groups">Группы</string>
     <string name="menu_item_layout">Изменить вид</string>
@@ -39,6 +40,7 @@
     <string name="hint_log_in_to_see">Авторизуйтесь, чтобы увидеть здесь список своих %1$s</string>
     <string name="hint_custom_users">Здесь возможно добавление произвольных %1$s по ID, короткому имени или ссылке на страницу</string>
     <string name="hint_search">Поиск фото по тегам</string>
+    <string name="hint_search_users">Длительное нажатие на элемент результата добавит его в сохраненный список</string>
     <string name="hint_friends">друзей</string>
     <string name="hint_users">пользователей</string>
     <string name="hint_groups">групп</string>
@@ -46,6 +48,7 @@
     <string name="button_log_in">Войти</string>
     <string name="button_log_out">Выйти</string>
     <string name="message_success_added">Успешно добавлено</string>
+    <string name="message_success_added_but_private">Успешно добавлено, но в связи с настройками приватности аккаунта, получение контента будет недоступно пока аккаунт не станет публичным.</string>
     <string name="message_already_exists">Уже существует</string>
     <string name="menu_item_add">Добавить</string>
     <string name="button_search">Поиск</string>

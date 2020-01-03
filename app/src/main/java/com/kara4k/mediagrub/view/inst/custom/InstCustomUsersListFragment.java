@@ -14,6 +14,7 @@ import com.kara4k.mediagrub.view.base.hints.Hint;
 import com.kara4k.mediagrub.view.base.hints.HintCustom;
 import com.kara4k.mediagrub.view.inst.InstPhotoListFragment;
 import com.kara4k.mediagrub.view.main.UserCreatorActivity;
+import com.kara4k.mediagrub.view.main.UserSearchActivity;
 
 public class InstCustomUsersListFragment
         extends CustomUsersListFragment<InstCustomUsersListPresenter> {
@@ -21,6 +22,11 @@ public class InstCustomUsersListFragment
 
     public static InstCustomUsersListFragment newInstance() {
         return new InstCustomUsersListFragment();
+    }
+
+    @Override
+    protected boolean isHasUserSearchMenuItem() {
+        return true;
     }
 
     @Override
@@ -50,6 +56,13 @@ public class InstCustomUsersListFragment
     @Override
     public void showUserCreator() {
         final Intent intent = UserCreatorActivity.newIntent(
+                getContext(), CustomUser.INSTAGRAM, CustomUser.USER);
+        activityStart(intent);
+    }
+
+    @Override
+    public void showUserSearch() {
+        final Intent intent = UserSearchActivity.newIntent(
                 getContext(), CustomUser.INSTAGRAM, CustomUser.USER);
         activityStart(intent);
     }

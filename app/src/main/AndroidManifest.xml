@@ -39,6 +39,10 @@
         <activity
             android:name=".view.main.UserCreatorActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".view.main.UserSearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+
         <activity android:name=".view.main.settings.SettingsActivity"/>
 
         <service

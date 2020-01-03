@@ -174,7 +174,7 @@ public class MediaPageFragment extends BaseFragment implements MediaPageViewIF {
         final String description = mediaItem.getDescription();
 
         if (title != null) mTitleTextView.setText(title);
-        if (description != null) mDescTextView.setText(description);
+//        if (description != null) mDescTextView.setText(description);
     }
 
     @Override

@@ -29,14 +29,14 @@ public class UserCreatorActivity extends BaseActivity {
     @Override
     protected void onViewReady() {
         super.onViewReady();
-        int service = getIntent().getIntExtra(SERVICE, EMPTY);
-        int type = getIntent().getIntExtra(TYPE, EMPTY);
+        final int service = getIntent().getIntExtra(SERVICE, EMPTY);
+        final int type = getIntent().getIntExtra(TYPE, EMPTY);
 
-        Fragment fragment = getFragment(service, type);
+        final Fragment fragment = getFragment(service, type);
         setNoAnimatedFragment(fragment);
     }
 
-    private Fragment getFragment(int service, int type) {
+    private Fragment getFragment(final int service, final int type) {
         switch (service) {
             case CustomUser.VK:
                 if (type == CustomUser.USER) return VkCustomUsersCreatorFragment.newInstance();
@@ -55,8 +55,8 @@ public class UserCreatorActivity extends BaseActivity {
         }
     }
 
-    public static Intent newIntent(Context context, int service, int type) {
-        Intent intent = new Intent(context, UserCreatorActivity.class);
+    public static Intent newIntent(final Context context, final int service, final int type) {
+        final Intent intent = new Intent(context, UserCreatorActivity.class);
         intent.putExtra(SERVICE, service);
         intent.putExtra(TYPE, type);
         return intent;

@@ -13,6 +13,10 @@ public abstract class CustomUsersListFragment<P extends CustomUsersPresenter>
 
     public static final int MENU_USER_ADD_ID = 115;
 
+    protected  boolean isHasUserSearchMenuItem(){
+        return false;
+    }
+
     @Override
     protected void onMenuInflated(final Menu menu) {
         super.onMenuInflated(menu);
@@ -22,6 +26,10 @@ public abstract class CustomUsersListFragment<P extends CustomUsersPresenter>
                 2, R.string.menu_item_add);
         menuItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menuItem.setIcon(R.drawable.ic_person_add_white_24dp);
+
+        if (isHasUserSearchMenuItem()){
+            menu.findItem(R.id.menu_item_search_users).setVisible(true);
+        }
     }
 
     @Override
@@ -34,6 +42,9 @@ public abstract class CustomUsersListFragment<P extends CustomUsersPresenter>
         switch (item.getItemId()) {
             case MENU_USER_ADD_ID:
                 getPresenter().onAddUser();
+                return true;
+            case R.id.menu_item_search_users:
+                getPresenter().onSearchUsers();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

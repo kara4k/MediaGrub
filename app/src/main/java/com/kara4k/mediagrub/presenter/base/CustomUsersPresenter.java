@@ -119,4 +119,8 @@ abstract public class CustomUsersPresenter extends UsersListPresenter {
     public void onAddUser() {
         getView().showUserCreator();
     }
+
+    public void onSearchUsers(){
+        getView().showUserSearch();
+    }
 }

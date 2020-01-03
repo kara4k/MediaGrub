@@ -3,7 +3,7 @@ package com.kara4k.mediagrub.view.adapters.recycler;
 
 import java.io.Serializable;
 
-public class UserItem extends SelectableItem implements Serializable{
+public class UserItem extends SelectableItem implements Serializable {
 
     public static final long serialVersionUID = 20L;
 
@@ -18,20 +18,21 @@ public class UserItem extends SelectableItem implements Serializable{
     private String mId;
     private String mPhotoUrl;
     private String mService;
+    private boolean isPrivate;
 
-    public void setMainText(String mainText) {
+    public void setMainText(final String mainText) {
         mMainText = mainText;
     }
 
-    public void setAdditionText(String additionText) {
+    public void setAdditionText(final String additionText) {
         mAdditionText = additionText;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         mId = id;
     }
 
-    public void setPhotoUrl(String photoUrl) {
+    public void setPhotoUrl(final String photoUrl) {
         mPhotoUrl = photoUrl;
     }
 
@@ -55,8 +56,16 @@ public class UserItem extends SelectableItem implements Serializable{
         return mService;
     }
 
-    public void setService(String service) {
+    public void setService(final String service) {
         mService = service;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(final boolean aPrivate) {
+        isPrivate = aPrivate;
     }
 
     @Override
@@ -67,6 +76,7 @@ public class UserItem extends SelectableItem implements Serializable{
                 ", mId='" + mId + '\'' +
                 ", mPhotoUrl='" + mPhotoUrl + '\'' +
                 ", mService='" + mService + '\'' +
+                ", isPrivate=" + isPrivate +
                 '}';
     }
 }

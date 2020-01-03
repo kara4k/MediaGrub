@@ -34,6 +34,7 @@ public class UserMapper {
         userItem.setAdditionText(user.getUsername());
         userItem.setPhotoUrl(user.getProfilePicUrl());
         userItem.setService(UserItem.INSTAGRAM);
+        userItem.setPrivate(user.getIsPrivate());
         return userItem;
     }
 

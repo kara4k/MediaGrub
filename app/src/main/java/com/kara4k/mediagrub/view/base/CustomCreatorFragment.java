@@ -13,8 +13,6 @@ import com.kara4k.mediagrub.presenter.base.CustomCreatorPresenter;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 import com.squareup.picasso.Picasso;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -35,6 +33,8 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
     TextView mMainTextView;
     @BindView(R.id.addition_text_view)
     TextView mAdditionTextView;
+    @BindView(R.id.icon_private_user)
+    ImageView mPrivateImageView;
     @BindView(R.id.add_btn)
     Button mAddBtn;
 
@@ -78,6 +78,7 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
         mMainTextView.setText(userItem.getMainText());
         mAdditionTextView.setText(userItem.getAdditionText());
         Picasso.with(getContext()).load(userItem.getPhotoUrl()).into(mPhotoImageView);
+        mPrivateImageView.setVisibility(userItem.isPrivate() ? View.VISIBLE : View.GONE);
         mUserLayout.setVisibility(View.VISIBLE);
         mAddBtn.setVisibility(View.VISIBLE);
     }
@@ -85,6 +86,11 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
     @Override
     public void showUserAdded() {
         showToast(getString(R.string.message_success_added));
+    }
+
+    @Override
+    public void showUserAddedButPrivate() {
+        showToast(getString(R.string.message_success_added_but_private));
     }
 
     @Override
@@ -107,7 +113,7 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
     public void showError(final String message) {
         try {
             showToast(message == null ? getString(R.string.custom_user_not_found) : message);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // TODO: 9/16/19 android 9 debug (context issues here)
         }
     }

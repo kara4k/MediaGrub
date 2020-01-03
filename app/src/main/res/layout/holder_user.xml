@@ -31,7 +31,7 @@
         android:layout_marginTop="14dp"
         android:layout_toEndOf="@+id/photo_image_view"
         android:layout_toRightOf="@+id/photo_image_view"
-        android:text="shkjdhfskjd"
+        android:text="sadasdasd"
         android:textColor="@android:color/white"
         android:textStyle="bold"/>
 
@@ -52,6 +52,21 @@
         android:text="dsdgsdgsdg"
         android:textColor="@android:color/white"
         android:textSize="12sp"/>
+
+    <ImageView
+        android:id="@+id/icon_private_user"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@id/main_text_view"
+        android:layout_marginStart="@dimen/dimen_default"
+        android:layout_marginLeft="@dimen/dimen_default"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="16dp"
+        android:layout_toStartOf="@+id/addition_text_view"
+        android:layout_toLeftOf="@+id/addition_text_view"
+        android:src="@drawable/ic_private_user" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"

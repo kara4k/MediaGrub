@@ -9,6 +9,8 @@ public interface CustomCreatorIF extends ViewIF {
 
     void showUserAdded();
 
+    void showUserAddedButPrivate();
+
     void showUserAlreadyExists();
 
     void hideUserInfo();

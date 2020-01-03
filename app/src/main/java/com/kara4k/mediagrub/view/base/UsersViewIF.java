@@ -8,4 +8,6 @@ public interface UsersViewIF extends ListViewIF<UserItem> {
     void showAlbums(UserItem userItem);
 
     void showUserCreator();
+
+    void showUserSearch();
 }

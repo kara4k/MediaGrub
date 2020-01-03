@@ -67,7 +67,12 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
 
     private void onUserAdded() {
         mView.hideUserInfo();
-        mView.showUserAdded();
+
+        if (mUserItem.isPrivate()){
+            mView.showUserAddedButPrivate();
+        } else {
+            mView.showUserAdded();
+        }
     }
 
     private void addUserToDb() {
@@ -107,6 +112,10 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
 
     @Override
     public void onError(final Throwable e) {
+        onNotFound();
+    }
+
+    private void onNotFound() {
         mUserItem = null;
         mView.hideUserInfo();
         mView.showError(null);
@@ -114,7 +123,7 @@ public abstract class CustomCreatorPresenter extends Presenter implements MaybeO
 
     @Override
     public void onComplete() {
-
+        onNotFound();
     }
 
     public CustomCreatorIF getView() {
