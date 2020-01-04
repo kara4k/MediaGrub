@@ -39,6 +39,7 @@ public class UsersMapper implements Function<List<User>, Observable<UserItem>> {
         userItem.setAdditionText(user.getScreenName());
         userItem.setPhotoUrl(getPhotoUrl(user));
         userItem.setService(UserItem.TWITTER);
+        userItem.setPrivate(user.getIsProtected() != null && user.getIsProtected());
         return userItem;
     }
 

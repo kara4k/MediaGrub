@@ -21,6 +21,9 @@ public class User {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("protected")
+    @Expose
+    private Boolean mIsProtected;
 
     public String getIdStr() {
         return idStr;
@@ -62,4 +65,11 @@ public class User {
         this.description = description;
     }
 
+    public Boolean getIsProtected() {
+        return mIsProtected;
+    }
+
+    public void setIsProtected(final Boolean isProtected) {
+        this.mIsProtected = mIsProtected;
+    }
 }
