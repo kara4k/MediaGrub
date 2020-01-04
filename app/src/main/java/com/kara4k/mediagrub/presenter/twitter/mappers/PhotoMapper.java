@@ -29,7 +29,7 @@ public class PhotoMapper implements Function<List<Tweet>, Observable<MediaItem>>
     }
 
     @Override
-    public Observable<MediaItem> apply(List<Tweet> tweets) throws Exception {
+    public Observable<MediaItem> apply(final List<Tweet> tweets) throws Exception {
         return Observable.fromIterable(tweets)
                 .filter(tweet -> tweet.getExtendedEntities() != null)
                 .filter(this::setupMediaText)
@@ -41,17 +41,16 @@ public class PhotoMapper implements Function<List<Tweet>, Observable<MediaItem>>
                 .doFinally(() -> setupOffsets(tweets));
     }
 
-    protected boolean typeFilter(Medium__ medium__) {
-        if (medium__.getType().equals(PHOTO)) return true;
-        return false;
+    protected boolean typeFilter(final Medium__ medium__) {
+        return medium__.getType().equals(PHOTO);
     }
 
-    private boolean setupMediaText(Tweet tweet) {
+    private boolean setupMediaText(final Tweet tweet) {
         mTempText = tweet.getText();
         return true;
     }
 
-    private void setupOffsets(List<Tweet> tweets) {
+    private void setupOffsets(final List<Tweet> tweets) {
         if (tweets.size() == 1) {
             mHasMore = false;
             return;
@@ -59,8 +58,8 @@ public class PhotoMapper implements Function<List<Tweet>, Observable<MediaItem>>
         mMaxId = tweets.get(tweets.size() - 1).getIdStr();
     }
 
-    private MediaItem map(Medium__ medium__) {
-        MediaItem mediaItem = new MediaItem();
+    private MediaItem map(final Medium__ medium__) {
+        final MediaItem mediaItem = new MediaItem();
         mediaItem.setId(medium__.getIdStr());
         mediaItem.setAlbumId("");
         mediaItem.setOwnerId("");
@@ -77,15 +76,15 @@ public class PhotoMapper implements Function<List<Tweet>, Observable<MediaItem>>
         return MediaItem.PHOTO;
     }
 
-    protected String getSourceUrl(Medium__ medium__) {
+    protected String getSourceUrl(final Medium__ medium__) {
         return medium__.getMediaUrlHttps();
     }
 
-    private String getAddition(Medium__ medium__) {
+    private String getAddition(final Medium__ medium__) {
         try {
-            Large_ large = medium__.getSizes().getLarge();
+            final Large_ large = medium__.getSizes().getLarge();
             return String.format(Locale.ENGLISH, "%dx%d", large.getW(), large.getH());
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
         return SystemData.UNDEFINED_SIZE;

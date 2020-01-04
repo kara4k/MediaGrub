@@ -23,6 +23,7 @@ import com.kara4k.mediagrub.view.tumblr.TumblrPhotoListFragment;
 import com.kara4k.mediagrub.view.tumblr.custom.TumblrCustomUsersCreatorFragment;
 import com.kara4k.mediagrub.view.tumblr.custom.TumblrCustomUsersListFragment;
 import com.kara4k.mediagrub.view.twitter.TwitterPhotoListFragment;
+import com.kara4k.mediagrub.view.twitter.TwitterUserSearchFragment;
 import com.kara4k.mediagrub.view.twitter.TwitterVideoListFragment;
 import com.kara4k.mediagrub.view.twitter.custom.TwitterCustomUsersCreatorFragment;
 import com.kara4k.mediagrub.view.twitter.custom.TwitterCustomUsersListFragment;
@@ -88,6 +89,8 @@ public interface ViewComponent {
     void injectTwitterPhotoListFrag(TwitterPhotoListFragment fragment);
 
     void injectTwitterVideoListFrag(TwitterVideoListFragment fragment);
+
+    void injectTwitterUserSearchFragment(TwitterUserSearchFragment fragment);
 
     void injectTumblrCustomUsersListFrag(TumblrCustomUsersListFragment fragment);
 

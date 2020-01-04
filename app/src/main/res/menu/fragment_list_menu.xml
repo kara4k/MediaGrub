@@ -9,7 +9,7 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"
         />
-    
+
     <item
         android:id="@+id/menu_item_search_users"
         android:icon="@drawable/ic_group_add_white_24dp"

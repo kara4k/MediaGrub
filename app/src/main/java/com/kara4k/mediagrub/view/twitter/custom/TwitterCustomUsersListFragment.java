@@ -14,16 +14,22 @@ import com.kara4k.mediagrub.view.base.CustomUsersListFragment;
 import com.kara4k.mediagrub.view.base.hints.Hint;
 import com.kara4k.mediagrub.view.base.hints.HintCustom;
 import com.kara4k.mediagrub.view.main.UserCreatorActivity;
+import com.kara4k.mediagrub.view.main.UserSearchActivity;
 import com.kara4k.mediagrub.view.twitter.TwitterMediaViewPagerFragment;
 
 public class TwitterCustomUsersListFragment
         extends CustomUsersListFragment<TwitterCustomUsersListPresenter> {
 
     public static TwitterCustomUsersListFragment newInstance() {
-        Bundle args = new Bundle();
-        TwitterCustomUsersListFragment fragment = new TwitterCustomUsersListFragment();
+        final Bundle args = new Bundle();
+        final TwitterCustomUsersListFragment fragment = new TwitterCustomUsersListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected boolean isHasUserSearchMenuItem() {
+        return true;
     }
 
     @Override
@@ -52,13 +58,20 @@ public class TwitterCustomUsersListFragment
 
     @Override
     public void showUserCreator() {
-        Intent intent = UserCreatorActivity.newIntent(
+        final Intent intent = UserCreatorActivity.newIntent(
                 getContext(), CustomUser.TWITTER, CustomUser.USER);
         activityStart(intent);
     }
 
     @Override
-    public void showAlbums(UserItem userItem) {
+    public void showUserSearch() {
+        final Intent intent = UserSearchActivity.newIntent(
+                getContext(), CustomUser.TWITTER, CustomUser.USER);
+        activityStart(intent);
+    }
+
+    @Override
+    public void showAlbums(final UserItem userItem) {
         addFragment(TwitterMediaViewPagerFragment.newInstance(userItem));
     }
 }

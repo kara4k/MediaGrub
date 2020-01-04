@@ -8,6 +8,7 @@ import com.kara4k.mediagrub.R;
 import com.kara4k.mediagrub.model.database.CustomUser;
 import com.kara4k.mediagrub.view.base.BaseActivity;
 import com.kara4k.mediagrub.view.inst.search.InstUserSearchFragment;
+import com.kara4k.mediagrub.view.twitter.TwitterUserSearchFragment;
 
 public class UserSearchActivity extends BaseActivity {
 
@@ -33,6 +34,8 @@ public class UserSearchActivity extends BaseActivity {
         switch (service) {
             case CustomUser.INSTAGRAM:
                 return InstUserSearchFragment.newInstance();
+            case CustomUser.TWITTER:
+                return TwitterUserSearchFragment.newInstance();
             default:
                 return new Fragment();
         }

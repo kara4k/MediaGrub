@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getContentView();
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentView());
         ButterKnife.bind(this);
@@ -35,31 +35,31 @@ public abstract class BaseActivity extends AppCompatActivity {
         onViewReady();
     }
 
-    protected void setNoAnimatedFragment(Fragment fragment){
+    protected void setNoAnimatedFragment(final Fragment fragment) {
         changeFragment(fragment, false, false);
     }
 
-    protected void setFragment(Fragment fragment) {
+    protected void setFragment(final Fragment fragment) {
         getSupportFragmentManager()
                 .popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         changeFragment(fragment, false, true);
     }
 
-    public void addFragment(Fragment fragment) {
+    public void addFragment(final Fragment fragment) {
         changeFragment(fragment, true, true);
     }
 
-    private void changeFragment(Fragment fragment, boolean isBackStack, boolean isShowAnimation) {
+    private void changeFragment(final Fragment fragment, final boolean isBackStack, final boolean isShowAnimation) {
         try {
-            FragmentManager sfm = getSupportFragmentManager();
-            int container = R.id.fragment_container;
+            final FragmentManager sfm = getSupportFragmentManager();
+            final int container = R.id.fragment_container;
 
-            Fragment currentFrag = sfm.findFragmentById(container);
-            FragmentTransaction transaction = sfm.beginTransaction();
+            final Fragment currentFrag = sfm.findFragmentById(container);
+            final FragmentTransaction transaction = sfm.beginTransaction();
 
             if (isShowAnimation) {
                 transaction.setCustomAnimations(R.anim.from_in, R.anim.to_in,
-                        R.anim.from_out,  R.anim.to_out);
+                        R.anim.from_out, R.anim.to_out);
             }
 
             if (currentFrag == null) {
@@ -71,13 +71,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
 
             transaction.commit();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void setTitle(String title, String subtitle) {
-        ActionBar supportActionBar = getSupportActionBar();
+    public void setTitle(final String title, final String subtitle) {
+        final ActionBar supportActionBar = getSupportActionBar();
 
         if (supportActionBar != null) {
             supportActionBar.setTitle(title);
@@ -85,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void showConfirmDialog(String title, String text, DialogInterface.OnClickListener okListener) {
+    protected void showConfirmDialog(final String title, final String text, final DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(text)
@@ -94,8 +94,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .create().show();
     }
 
-    protected void showItemsDialog(String title, CharSequence[] items,
-                                   DialogInterface.OnClickListener listener) {
+    protected void showItemsDialog(final String title, final CharSequence[] items,
+                                   final DialogInterface.OnClickListener listener) {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setItems(items, listener)
@@ -103,29 +103,29 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .show();
     }
 
-    protected void showToast(String message) {
+    protected void showToast(final String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void hideSoftKeyboard() {
         try {
             if (getCurrentFocus() != null) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getApplicationContext()
+                final InputMethodManager inputMethodManager = (InputMethodManager) getApplicationContext()
                         .getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager
                         .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    protected void activityStart(Intent intent) {
+    protected void activityStart(final Intent intent) {
         startActivity(intent);
         overridePendingTransition(R.anim.from_in, R.anim.to_in);
     }
 
-    protected void activityStartForResult(Intent intent, int code) {
+    protected void activityStartForResult(final Intent intent, final int code) {
         startActivityForResult(intent, code);
         overridePendingTransition(R.anim.from_in, R.anim.to_in);
     }
