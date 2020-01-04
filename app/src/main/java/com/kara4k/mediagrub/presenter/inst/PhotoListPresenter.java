@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.kara4k.mediagrub.api.InstApi;
 import com.kara4k.mediagrub.model.database.MediaItem;
 import com.kara4k.mediagrub.model.inst.RequestObject;
-import com.kara4k.mediagrub.model.inst.detailed.DetailedInfo;
 import com.kara4k.mediagrub.presenter.base.MediaListPresenter;
 import com.kara4k.mediagrub.presenter.inst.mappers.PhotoMapper;
 import com.kara4k.mediagrub.view.adapters.recycler.AlbumItem;
@@ -19,10 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
 
@@ -61,7 +57,7 @@ public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
                         .body().getData().getShortcodeMedia().getVideoUrl();
 
                 mediaItem.setSourceUrl(videoUrl);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 mediaItem.setSourceUrl(mediaItem.getThumbUrl());
             }
         }
