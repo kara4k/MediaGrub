@@ -1,4 +1,3 @@
-
 package com.kara4k.mediagrub.model.vk.groups;
 
 import com.google.gson.annotations.SerializedName;
@@ -16,7 +15,7 @@ public class Response {
         return mCount;
     }
 
-    public void setCount(Long count) {
+    public void setCount(final Long count) {
         mCount = count;
     }
 
@@ -24,7 +23,7 @@ public class Response {
         return mItems;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(final List<Item> items) {
         mItems = items;
     }
 }

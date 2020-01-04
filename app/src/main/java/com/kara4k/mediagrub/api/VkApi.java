@@ -1,9 +1,10 @@
 package com.kara4k.mediagrub.api;
 
 
+import com.kara4k.mediagrub.model.vk.custom.group.CustomGroupResponse;
+import com.kara4k.mediagrub.model.vk.custom.users.UsersResponse;
 import com.kara4k.mediagrub.model.vk.friends.FriendsResponse;
 import com.kara4k.mediagrub.model.vk.groups.GroupsResponse;
-import com.kara4k.mediagrub.model.vk.users.UsersResponse;
 import com.kara4k.mediagrub.model.vk.photo.PhotoResponse;
 import com.kara4k.mediagrub.model.vk.photoalbum.PhotoAlbumResponse;
 
@@ -48,13 +49,13 @@ public interface VkApi {
                                         @Query("offset") int offset,
                                         @Query("access_token") String token);
 
-    @GET("users.get?v=5.52&fields=photo_100")
+    @GET("users.get?v=5.89&fields=photo_100")
     Observable<UsersResponse> getUsersInfo(
             @Query("user_ids") String userIds,
             @Query("access_token") String token);
 
-    @GET("groups.getById?v=5.52")
-    Observable<UsersResponse> getGroupsInfo(
+    @GET("groups.getById?v=5.89")
+    Observable<CustomGroupResponse> getGroupsInfo(
             @Query("group_ids") String groupIds,
             @Query("access_token") String token);
 

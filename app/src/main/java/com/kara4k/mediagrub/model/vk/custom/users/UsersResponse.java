@@ -1,5 +1,5 @@
 
-package com.kara4k.mediagrub.model.vk.users;
+package com.kara4k.mediagrub.model.vk.custom.users;
 
 import com.google.gson.annotations.SerializedName;
 import com.kara4k.mediagrub.model.vk.ResponseError;

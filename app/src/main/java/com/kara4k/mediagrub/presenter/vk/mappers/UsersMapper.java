@@ -1,8 +1,8 @@
 package com.kara4k.mediagrub.presenter.vk.mappers;
 
 
-import com.kara4k.mediagrub.model.vk.users.Response;
-import com.kara4k.mediagrub.model.vk.users.UsersResponse;
+import com.kara4k.mediagrub.model.vk.custom.users.Response;
+import com.kara4k.mediagrub.model.vk.custom.users.UsersResponse;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 
 import javax.inject.Inject;
@@ -44,6 +44,7 @@ public class UsersMapper implements Function<UsersResponse, Observable<UserItem>
         userItem.setAdditionText(id);
         userItem.setPhotoUrl(response.getPhoto100());
         userItem.setService(UserItem.VKONTAKTE);
+        userItem.setPrivate(response.getIsClosed() != null && response.getIsClosed());
 
         return userItem;
     }

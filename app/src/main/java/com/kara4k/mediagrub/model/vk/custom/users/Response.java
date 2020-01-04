@@ -1,5 +1,5 @@
 
-package com.kara4k.mediagrub.model.vk.users;
+package com.kara4k.mediagrub.model.vk.custom.users;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,6 +17,8 @@ public class Response {
     private String mName;
     @SerializedName("screen_name")
     private String mScreenName;
+    @SerializedName("is_closed")
+    private Boolean mIsClosed;
 
     public String getFirstName() {
         return mFirstName;
@@ -64,5 +66,13 @@ public class Response {
 
     public void setScreenName(String screenName) {
         mScreenName = screenName;
+    }
+
+    public Boolean getIsClosed() {
+        return mIsClosed;
+    }
+
+    public void setIsClosed(final Boolean closed) {
+        mIsClosed = closed;
     }
 }
