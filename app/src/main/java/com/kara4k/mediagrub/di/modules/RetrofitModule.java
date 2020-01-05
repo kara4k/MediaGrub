@@ -1,6 +1,5 @@
 package com.kara4k.mediagrub.di.modules;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -40,7 +39,7 @@ public class RetrofitModule {
 
     @Singleton
     @Provides
-    OkHttpClient provideOkHttpClient(final Context context) {
+    OkHttpClient provideOkHttpClient() {
         return new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)

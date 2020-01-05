@@ -11,7 +11,6 @@ import com.kara4k.mediagrub.view.adapters.recycler.AlbumItem;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 import com.kara4k.mediagrub.view.base.media.MediaListViewIF;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,12 +32,12 @@ public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
     }
 
     @Override
-    public void onStart(UserItem userItem, AlbumItem albumItem) {
+    public void onStart(final UserItem userItem, final AlbumItem albumItem) {
         super.onStart(userItem, albumItem);
         createAlbum(userItem);
         setupTitle();
 
-        String request = new RequestObject(userItem.getId(), null).create();
+        final String request = new RequestObject(userItem.getId(), null).create();
 
         mInstApi.getPhotos(request)
                 .flatMap(mPhotoMapper)
@@ -49,15 +48,15 @@ public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
                 .subscribe(this);
     }
 
-    private MediaItem mapVideos(MediaItem mediaItem) throws IOException {
-        if (mediaItem.getType() == MediaItem.VIDEO){
-            String detailedInfoRequest = new RequestObject(mediaItem.getSourceUrl()).create();
+    private MediaItem mapVideos(final MediaItem mediaItem) {
+        if (mediaItem.getType() == MediaItem.VIDEO) {
+            final String detailedInfoRequest = new RequestObject(mediaItem.getSourceUrl()).create();
             try {
-                String videoUrl = mInstApi.getDetailedIno(detailedInfoRequest).execute()
+                final String videoUrl = mInstApi.getDetailedIno(detailedInfoRequest).execute()
                         .body().getData().getShortcodeMedia().getVideoUrl();
 
                 mediaItem.setSourceUrl(videoUrl);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 mediaItem.setSourceUrl(mediaItem.getThumbUrl());
             }
         }
@@ -65,7 +64,7 @@ public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
     }
 
     @Override
-    public void onSuccess(List<MediaItem> list) {
+    public void onSuccess(final List<MediaItem> list) {
         if (mAlbumItem.getTotalSize() == AlbumItem.UNDEFINED) {
             mAlbumItem.setSize(String.valueOf(mPhotoMapper.getAlbumSize()));
         }
@@ -73,9 +72,9 @@ public class PhotoListPresenter extends MediaListPresenter<MediaListViewIF> {
     }
 
     @Override
-    protected void loadMore(int offset, Consumer<List<MediaItem>> onPartLoaded) {
-        RequestObject requestObject = new RequestObject(mUserItem.getId(), mPhotoMapper.getLastId());
-        String request = new Gson().toJson(requestObject);
+    protected void loadMore(final int offset, final Consumer<List<MediaItem>> onPartLoaded) {
+        final RequestObject requestObject = new RequestObject(mUserItem.getId(), mPhotoMapper.getLastId());
+        final String request = new Gson().toJson(requestObject);
 
         mInstApi.getPhotos(request)
                 .flatMap(mPhotoMapper)

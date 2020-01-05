@@ -1,6 +1,8 @@
 package com.kara4k.mediagrub.model.inst;
 
 
+import com.google.gson.Gson;
+
 public class SearchRequestObj {
 
     public static final int LOAD_COUNT = 100;
@@ -37,5 +39,9 @@ public class SearchRequestObj {
 
     public void setAfter(String after) {
         this.after = after;
+    }
+
+    public String build(){
+        return new Gson().toJson(this);
     }
 }

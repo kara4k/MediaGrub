@@ -41,8 +41,7 @@ public class InstPhotoSearchPresenter extends SearchPresenter {
         String text = query.replaceAll(" ", StringUtils.EMPTY).toLowerCase();
         super.onQuerySubmit(text);
 
-        SearchRequestObj searchRequestObj = new SearchRequestObj(text, null);
-        String request = new Gson().toJson(searchRequestObj);
+        String request = new SearchRequestObj(text, null).build();
 
         mInstApi.searchPhotos(request)
                 .flatMap(mSearchMapper)
