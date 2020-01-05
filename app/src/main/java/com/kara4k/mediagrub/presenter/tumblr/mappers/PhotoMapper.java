@@ -8,7 +8,15 @@ import com.kara4k.mediagrub.model.tumblr.photo.Photo;
 import com.kara4k.mediagrub.model.tumblr.photo.PhotoResponse;
 import com.kara4k.mediagrub.model.tumblr.photo.Post;
 import com.kara4k.mediagrub.model.tumblr.photo.Response;
+import com.kara4k.mediagrub.other.Tools;
 
+import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,12 +33,14 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
     private int mOffset = 0;
     private Long mTotalPosts;
 
+    private static final String POST_TYPE_TEXT = "text";
+
     @Inject
     public PhotoMapper() {
     }
 
     @Override
-    public Observable<MediaItem> apply(PhotoResponse photoResponse) throws Exception {
+    public Observable<MediaItem> apply(final PhotoResponse photoResponse) throws Exception {
         return Observable.just(photoResponse)
                 .map(PhotoResponse::getResponse)
                 .map(Response::getPosts)
@@ -39,20 +49,62 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
                 .map(Post::getPhotos)
                 .flatMapIterable(photos -> photos)
                 .map(this::map)
+                .mergeWith(getTextExtractedItems(photoResponse))
                 .doFinally(() -> setupOffsets(photoResponse));
     }
 
-    private void setupOffsets(PhotoResponse photoResponse) {
+    private Observable<MediaItem> getTextExtractedItems(final PhotoResponse photoResponse) {
+        return Observable.just(photoResponse)
+                .map(PhotoResponse::getResponse)
+                .map(Response::getPosts)
+                .flatMapIterable(posts -> posts)
+                .filter(post -> post.getType().equals(POST_TYPE_TEXT))
+                .filter(post -> StringUtils.isNotEmpty(post.getBody()))
+                .map(this::mapPhotoItemsFromTextPost)
+                .flatMapIterable(mediaItems -> mediaItems);
+    }
+
+    private void setupOffsets(final PhotoResponse photoResponse) {
         try {
             mOffset += photoResponse.getResponse().getPosts().size();
             mTotalPosts = photoResponse.getResponse().getTotalPosts();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    private MediaItem map(Photo photo) {
-        MediaItem mediaItem = new MediaItem();
+    private List<MediaItem> mapPhotoItemsFromTextPost(final Post post) {
+        final Document document = Jsoup.parse(post.getBody());
+        final Elements elements = document.select("img[src]");
+
+        final List<MediaItem> photoItems = new ArrayList<>(elements.size());
+
+        for (final Element x : elements) {
+            final String photoSrc = x.attr("src");
+
+            if (StringUtils.isEmpty(photoSrc)) {
+                continue;
+            }
+
+            final MediaItem mediaItem = new MediaItem();
+            mediaItem.setId(Tools.idFromPhotoUrl(photoSrc));
+            mediaItem.setAlbumId("");
+            mediaItem.setOwnerId("");
+            mediaItem.setTitle(post.getTitle());
+            mediaItem.setDescription("");
+            mediaItem.setAddition("");
+            mediaItem.setThumbUrl(photoSrc);
+            mediaItem.setSourceUrl(photoSrc);
+            mediaItem.setType(MediaItem.PHOTO);
+
+            photoItems.add(mediaItem);
+        }
+
+        return photoItems;
+    }
+
+    private MediaItem map(final Photo photo) {
+        final MediaItem mediaItem = new MediaItem();
         mediaItem.setId(getId(photo));
         mediaItem.setAlbumId("");
         mediaItem.setOwnerId("");
@@ -65,28 +117,28 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
         return mediaItem;
     }
 
-    private String getId(Photo photo) {
+    private String getId(final Photo photo) {
         try {
-            String url = photo.getOriginalSize().getUrl();
-            String[] split = url.split("/");
-            String name = split[split.length - 1];
+            final String url = photo.getOriginalSize().getUrl();
+            final String[] split = url.split("/");
+            final String name = split[split.length - 1];
             return name.split("_")[1];
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             return String.valueOf(System.currentTimeMillis());
         }
     }
 
-    private String getThumbnail(Photo photo) {
-        List<AltSize> altSizes = photo.getAltSizes();
+    private String getThumbnail(final Photo photo) {
+        final List<AltSize> altSizes = photo.getAltSizes();
 
         for (int i = 0; i < altSizes.size(); i++) {
-            AltSize altSize = altSizes.get(i);
-            Long width = altSize.getWidth();
-            Long height = altSize.getHeight();
+            final AltSize altSize = altSizes.get(i);
+            final Long width = altSize.getWidth();
+            final Long height = altSize.getHeight();
 
             if ((width > THUMB_MIN && height > THUMB_MIN)
-                    && (width < THUMB_MAX && height < THUMB_MAX)){
+                    && (width < THUMB_MAX && height < THUMB_MAX)) {
                 return altSize.getUrl();
             }
         }
@@ -94,13 +146,13 @@ public class PhotoMapper implements Function<PhotoResponse, Observable<MediaItem
         return photo.getOriginalSize().getUrl();
     }
 
-    private String getAddition(Photo photo) {
-        OriginalSize originalSize = photo.getOriginalSize();
+    private String getAddition(final Photo photo) {
+        final OriginalSize originalSize = photo.getOriginalSize();
         return String.format(Locale.ENGLISH,
                 "%dx%d", originalSize.getWidth(), originalSize.getHeight());
     }
 
-    private String getSourceUrl(Photo photo) {
+    private String getSourceUrl(final Photo photo) {
         return photo.getOriginalSize().getUrl();
     }
 

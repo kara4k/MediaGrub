@@ -35,4 +35,15 @@ public class Tools {
 
         return String.valueOf(value);
     }
+
+    public static String idFromPhotoUrl(final String photoUrl) {
+        try {
+            final String[] split = photoUrl.split("/");
+            final String fullName = split[split.length - 1];
+
+            return fullName.split("\\.")[0];
+        } catch (final Exception e) {
+            return String.valueOf(System.currentTimeMillis());
+        }
+    }
 }
