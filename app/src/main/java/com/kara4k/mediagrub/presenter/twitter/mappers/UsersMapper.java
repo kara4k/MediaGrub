@@ -4,6 +4,7 @@ package com.kara4k.mediagrub.presenter.twitter.mappers;
 import com.kara4k.mediagrub.model.twitter.users.User;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -61,6 +62,10 @@ public class UsersMapper implements Function<List<User>, Observable<UserItem>> {
             final String addition = x.select("b.u-linkComplex-target").text();
             final String photo = x.select("img.ProfileCard-avatarImage").attr("src");
             final Elements privateElems = x.select("span.Icon.Icon--protected");
+
+            if (StringUtils.isEmpty(photo)){ // banned
+                continue;
+            }
 
             final UserItem userItem = new UserItem();
             userItem.setId(addition);

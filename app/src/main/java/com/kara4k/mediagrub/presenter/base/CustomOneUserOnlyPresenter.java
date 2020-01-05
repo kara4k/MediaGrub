@@ -10,12 +10,10 @@ import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -69,6 +67,7 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
         }
     }
 
+    // TODO: 1/5/20 overhead
     private void createSingleUserObserver() {
         singleUserObserver = new Observer<UserItem>() {
             @Override
@@ -91,7 +90,7 @@ public abstract class CustomOneUserOnlyPresenter extends CustomUsersPresenter {
 
             @Override
             public void onComplete() {
-                if (mUsersCount <= 0) onUsersListReady();
+                if (mUsersCount <= 1) onUsersListReady();
             }
         };
     }

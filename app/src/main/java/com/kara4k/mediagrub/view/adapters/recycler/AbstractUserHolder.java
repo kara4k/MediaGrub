@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.kara4k.mediagrub.R;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringUtils;
+
 import butterknife.BindView;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -34,10 +36,15 @@ public abstract class AbstractUserHolder extends BaseHolder<UserItem> {
         super.onBind(userItem, position);
         mMainTextView.setText(userItem.getMainText());
         mAdditionTextView.setText(userItem.getAdditionText());
-        Picasso.with(mContext)
-                .load(userItem.getPhotoUrl())
-                .transform(new CropCircleTransformation())
-                .into(mPhotoImageView);
+
+        if (StringUtils.isNotEmpty(userItem.getPhotoUrl())){
+            Picasso.with(mContext)
+                    .load(userItem.getPhotoUrl())
+                    .error(R.drawable.ic_photo_error_white_50dp)
+                    .transform(new CropCircleTransformation())
+                    .into(mPhotoImageView);
+        }
+
         mNumTextView.setText(String.valueOf(position));
         mPrivateUserIcon.setVisibility(userItem.isPrivate() ? View.VISIBLE : View.GONE);
     }
