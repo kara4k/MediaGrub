@@ -21,65 +21,75 @@ import dagger.Provides;
 @Module
 public class ViewModule {
 
-    private ViewIF mViewIF;
+    private final ViewIF mViewIF;
 
-    public ViewModule(ViewIF viewIF) {
+    public ViewModule(final ViewIF viewIF) {
         mViewIF = viewIF;
     }
 
     @Provides
     @PerActivity
-    MainViewIF provideMainViewIF(){
+    MainViewIF provideMainViewIF() {
         return (MainViewIF) mViewIF;
     }
 
     @Provides
     @PerActivity
-    AuthViewIF provideAuthViewIF(){
+    AuthViewIF provideAuthViewIF() {
         return (AuthViewIF) mViewIF;
     }
 
     @Provides
     @PerActivity
-    ActiveTasksViewIF provideActiveTasksViewIF(){
+    ActiveTasksViewIF provideActiveTasksViewIF() {
         return (ActiveTasksViewIF) mViewIF;
     }
 
     @Provides
     @PerActivity
-    CompletedTasksViewIF provideCompletedTasksViewIF(){
+    CompletedTasksViewIF provideCompletedTasksViewIF() {
         return (CompletedTasksViewIF) mViewIF;
     }
 
     @Provides
     @PerActivity
-    UsersViewIF provideUsersViewIF(){
+    UsersViewIF provideUsersViewIF() {
         return (UsersViewIF) mViewIF;
     }
 
     @Provides
     @PerActivity
-    AlbumViewIF provideAlbumViewIF() {return (AlbumViewIF) mViewIF;}
+    AlbumViewIF provideAlbumViewIF() {
+        return (AlbumViewIF) mViewIF;
+    }
 
     @Provides
     @PerActivity
-    MediaPageViewIF provideMediaPageViewIF(){
+    MediaPageViewIF provideMediaPageViewIF() {
         return (MediaPageViewIF) mViewIF;
     }
 
     @Provides
     @PerActivity
-    MediaListViewIF provideMediaListViewIF() {return (MediaListViewIF) mViewIF;}
+    MediaListViewIF provideMediaListViewIF() {
+        return (MediaListViewIF) mViewIF;
+    }
 
     @Provides
     @PerActivity
-    SearchViewIF provideSearchViewIF() {return (SearchViewIF) mViewIF;}
+    SearchViewIF provideSearchViewIF() {
+        return (SearchViewIF) mViewIF;
+    }
 
     @Provides
     @PerActivity
-    CustomCreatorIF provideCustomCreatorIF() {return (CustomCreatorIF) mViewIF;}
+    CustomCreatorIF provideCustomCreatorIF() {
+        return (CustomCreatorIF) mViewIF;
+    }
 
     @Provides
     @PerActivity
-    UserSearchIF provideUserSearchIF() {return (UserSearchIF) mViewIF;}
+    UserSearchIF provideUserSearchIF() {
+        return (UserSearchIF) mViewIF;
+    }
 }

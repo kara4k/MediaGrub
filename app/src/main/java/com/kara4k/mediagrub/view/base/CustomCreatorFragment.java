@@ -2,6 +2,7 @@ package com.kara4k.mediagrub.view.base;
 
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 import com.kara4k.mediagrub.R;
 import com.kara4k.mediagrub.presenter.base.CustomCreatorPresenter;
 import com.kara4k.mediagrub.view.adapters.recycler.UserItem;
+import com.kara4k.mediagrub.view.main.dialog.SendToServiceParams;
 import com.squareup.picasso.Picasso;
+
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 
@@ -55,12 +59,24 @@ public class CustomCreatorFragment<P extends CustomCreatorPresenter> extends Bas
     protected void onViewReady() {
         super.onViewReady();
         setupView();
+        handleIntentExtras();
     }
 
     private void setupView() {
         mUserLayout.findViewById(R.id.num_text_view).setVisibility(View.GONE);
         mUserLayout.findViewById(R.id.divider).setVisibility(View.INVISIBLE);
         mMainTextView.setTextColor(Color.BLACK);
+    }
+
+    private void handleIntentExtras() {
+        final Bundle bundle = this.getArguments();
+
+        if (bundle != null) {
+            final String text = bundle.getString(
+                    SendToServiceParams.SERVICE_BUNDLE_TEXT, StringUtils.EMPTY);
+
+            mEditText.setText(text);
+        }
     }
 
     @OnClick(R.id.search_btn)

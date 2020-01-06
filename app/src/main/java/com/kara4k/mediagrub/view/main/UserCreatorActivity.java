@@ -3,6 +3,8 @@ package com.kara4k.mediagrub.view.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.kara4k.mediagrub.R;
@@ -11,19 +13,46 @@ import com.kara4k.mediagrub.view.base.BaseActivity;
 import com.kara4k.mediagrub.view.flickr.custom.FlickrCustomGroupsCreatorFragment;
 import com.kara4k.mediagrub.view.flickr.custom.FlickrCustomUsersCreatorFragment;
 import com.kara4k.mediagrub.view.inst.custom.InstCustomUsersCreatorFragment;
+import com.kara4k.mediagrub.view.main.dialog.SendToServiceDialogProvider;
+import com.kara4k.mediagrub.view.main.dialog.SendToServiceParams;
 import com.kara4k.mediagrub.view.tumblr.custom.TumblrCustomUsersCreatorFragment;
 import com.kara4k.mediagrub.view.twitter.custom.TwitterCustomUsersCreatorFragment;
 import com.kara4k.mediagrub.view.vk.custom.VkCustomGroupCreatorFragment;
 import com.kara4k.mediagrub.view.vk.custom.VkCustomUsersCreatorFragment;
 
-public class UserCreatorActivity extends BaseActivity {
+import javax.inject.Inject;
+
+public class UserCreatorActivity extends BaseActivity
+        implements SendToServiceDialogProvider.SendToServiceDialogCallback {
 
     public static final String SERVICE = "service";
     public static final String TYPE = "type";
 
+    @Inject
+    SendToServiceDialogProvider dialogProvider;
+
     @Override
     protected int getContentView() {
         return R.layout.activity_container;
+    }
+
+    @Override
+    protected void injectDaggerDependencies() {
+        getAppComponent().injectUserCreatorActivity(this);
+    }
+
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dialogProvider.handleIntent(getIntent(), UserCreatorActivity.this, this);
+    }
+
+    @Override
+    public void onSendToServiceChosen(final SendToServiceParams params) {
+        final Fragment fragment = getFragment(params.getService(), params.getType());
+        fragment.setArguments(params.getBundle());
+
+        setNoAnimatedFragment(fragment);
     }
 
     @Override

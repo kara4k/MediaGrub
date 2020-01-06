@@ -20,18 +20,18 @@ public class TwitterCustomUsersCreatorPresenter extends CustomCreatorPresenter {
     UsersMapper mUsersMapper;
 
     @Inject
-    public TwitterCustomUsersCreatorPresenter(DaoSession daoSession) {
+    public TwitterCustomUsersCreatorPresenter(final DaoSession daoSession) {
         super(daoSession);
     }
 
     @Override
-    protected String convertInput(String input) {
+    protected String convertInput(final String input) {
         if (input.startsWith(URL_S)) {
-            String[] split = input.split("/");
+            final String[] split = input.split("/");
 
             if (split.length > 3) {
-                String name = split[3];
-                String[] nameSplit = name.split("\\?");
+                final String name = split[3];
+                final String[] nameSplit = name.split("\\?");
                 return nameSplit[0];
             }
         }
@@ -39,7 +39,7 @@ public class TwitterCustomUsersCreatorPresenter extends CustomCreatorPresenter {
     }
 
     @Override
-    protected void requestUserInfo(String userName) {
+    protected void requestUserInfo(final String userName) {
         mTwitterApi.getUsersInfo(userName)
                 .flatMap(mUsersMapper)
                 .singleElement()

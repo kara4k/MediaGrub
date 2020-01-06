@@ -92,4 +92,12 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="open_outside_app">Open outside the app</string>
     <string name="custom_user_not_found">Profile not found. Check input data and make sure the profile you are looking for has public access.</string>
+
+    <string-array name="array_send_to_service_names">
+        <item>@string/nav_item_vkontakte</item>
+        <item>@string/nav_item_instagram</item>
+        <item>@string/nav_item_twitter</item>
+        <item>@string/nav_item_tumblr</item>
+        <item>@string/nav_item_flickr</item>
+    </string-array>
 </resources>

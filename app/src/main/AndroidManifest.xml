@@ -38,7 +38,14 @@
             android:theme="@style/ActionBarOverlay"/>
         <activity
             android:name=".view.main.UserCreatorActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:configChanges="keyboardHidden|orientation|screenSize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.main.UserSearchActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>

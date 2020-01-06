@@ -113,5 +113,4 @@ public interface ViewComponent {
     void injectFlickrGroupPhotosFragment (FlickrGroupsPhotoListFragment fragment);
 
     void injectFlickrPhotoSearchFragment(FlickrPhotoSearchFragment fragment);
-
 }
