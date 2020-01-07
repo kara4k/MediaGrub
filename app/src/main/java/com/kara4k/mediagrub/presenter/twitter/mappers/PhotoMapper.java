@@ -51,7 +51,7 @@ public class PhotoMapper implements Function<List<Tweet>, Observable<MediaItem>>
     }
 
     private void setupOffsets(final List<Tweet> tweets) {
-        if (tweets.size() == 1) {
+        if (tweets.size() <= 1) {
             mHasMore = false;
             return;
         }
